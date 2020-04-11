@@ -1,0 +1,14 @@
+1,down loas node.js
+
+2,create koa2_basic folder
+
+
+3,npm init 
+
+4,npm install koa --save
+
+5,create app.js file
+
+6,add code to app.js file
+
+7, create model ,view ,control　folder
