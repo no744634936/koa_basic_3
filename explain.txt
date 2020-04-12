@@ -1,10 +1,12 @@
 1, npm install koa-router --save
 
 
-2,routers/admin/admin.js
+2,routers/admin_router/admin.js
 
 
-3,controllers/Admin.js
+3,controllers/admin_controller/Admin.js
+
+
 
 
 4,app.js
