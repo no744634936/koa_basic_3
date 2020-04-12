@@ -25,6 +25,9 @@ npm install  koa-static --save
 
 3,views/admin_views/login.html
 
+　　　　=>header.html
+         =>static_asset 
+
 
 
 
