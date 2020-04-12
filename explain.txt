@@ -1,3 +1,13 @@
-app.js
+1, npm install koa-router --save
 
-测试 是否能使用。
+
+2,routers/admin/admin.js
+
+
+3,controllers/Admin.js
+
+
+4,app.js
+
+
+这种写法的不足就是导koa-router路由包要导很多次。

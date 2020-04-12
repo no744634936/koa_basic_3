@@ -1,11 +1,10 @@
 const Koa = require('koa')
+const admin=require("./routers/admin/admin.js")
 const app = new Koa()
 
-// 中间件
-app.use(async (ctx) => {
-  ctx.body = 'test'
-})
 
+
+app.use(admin);          //启动admin路由
 app.listen(3000, () => {
   console.log('server is running at http://localhost:3000')
 })

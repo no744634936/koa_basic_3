@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/no744634936/koa_basic_3#readme",
   "dependencies": {
-    "koa": "^2.11.0"
+    "koa": "^2.11.0",
+    "koa-router": "^8.0.8"
   }
 }
