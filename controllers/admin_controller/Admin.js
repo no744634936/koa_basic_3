@@ -4,4 +4,8 @@ module.exports={
         ctx.body="test";
     },
 
+    login: async(ctx,next)=>{
+        ctx.body="login page"
+    }
+
 }
