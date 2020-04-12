@@ -5,7 +5,10 @@ module.exports={
     },
 
     login: async(ctx,next)=>{
-        ctx.body="login page"
+        console.log("login page");
+
+        // render 里面的路径不能这样写  "/admin_views/login" 最前面不能有/
+        await ctx.render("admin_views/login") 
     }
 
 }

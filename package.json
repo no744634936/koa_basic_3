@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/no744634936/koa_basic_3#readme",
   "dependencies": {
+    "art-template": "^4.13.2",
     "koa": "^2.11.0",
-    "koa-router": "^8.0.8"
+    "koa-art-template": "^1.1.1",
+    "koa-router": "^8.0.8",
+    "koa-static": "^5.0.0"
   }
 }
