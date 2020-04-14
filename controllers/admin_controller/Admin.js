@@ -23,14 +23,26 @@ module.exports={
             //获取信息成功之后将用户信息写入session
             ctx.session.adminInfo=result[0];
 
-            //redirect 是有路由的时候跳转。render是没有路由的时候。
-            // ctx.redirect('/admin/test');
-            await ctx.render("admin_views/test")
+            //redirect 是有路由的时候才能跳转。render是没有路由的时候。
+            //使用redirect的时候显示的是 http://localhost:3000/admin
+            ctx.redirect('/admin');
+
+            //使用render 显示的是  http://localhost:3000/admin/doLogin
+            // await ctx.render("admin_views/index.html")
             
         }else{
             //跳出弹窗，点击ok后返回login页面
             ctx.body="<script>alert('用户名或密码错误');location.href='/admin/login'</script>";
         }
+    },
+
+    index:async(ctx,next)=>{
+        await ctx.render("admin_views/index.html")
+    },
+
+    logout:async(ctx,next)=>{
+        ctx.session.adminInfo=null;
+        ctx.redirect("/admin/login");
     }
 
 }

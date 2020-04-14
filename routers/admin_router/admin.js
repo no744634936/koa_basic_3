@@ -8,6 +8,12 @@ let router=require("koa-router")()
 
 router.use(async (ctx,next)=>{
     console.log("admin");
+
+    //定义一个全局变量G，然后再每一个页面(view)里都可以使用这个userInfo里面的信息了
+    ctx.state.G={
+        adminInfo:ctx.session.adminInfo,
+    }
+
     if(ctx.session.adminInfo){
         await next();
     }else{
@@ -23,7 +29,9 @@ router.use(async (ctx,next)=>{
 })
 
 router.get("/admin/test",adminController.test);
-router.get("/admin/login",adminController.login)
-router.post("/admin/doLogin",adminController.doLogin)
+router.get("/admin/login",adminController.login);
+router.get("/admin/logout",adminController.logout);
+router.post("/admin/doLogin",adminController.doLogin);
+router.get("/admin",adminController.index)
 
 module.exports=router.routes();  //启动路由的命令

@@ -76,28 +76,18 @@ npm install md5 --save
 
 
 --------------------------------------------------------------
+logout 功能，
 
-用户权限功能
+//定义一个全局变量G，然后再每一个页面(view)里都可以使用这个userInfo里面的信息了
+// 为什么只能是admin 里面的view可以使用。user里面的view就不可以使用这个G呢？
+ctx.state.G={
+    adminInfo:ctx.session.adminInfo,
+}
 
-当用户登录以后没有logout就关闭了页面那么30分钟以内，可以免登录访问网站内容
-首先当用户登录之后，将用户信息保存到session里面。
-当用户访问后台每一个页面的时候都看一下，session里面有没有保存用户信息。
-如果有就表示已登录，如果没有就表示没登录。
-app.js 文件里面使用session
-addmin.js 文件里面判断是否有session
-
-app.js 文件里面使用session
-routers/admin_router/admin.js 文件里面判断是否有session
+---------------
 
 
 
-
-------------------------------------------------------
-使用账号密码登录功能
-从数据库取出数据然后与输入的数据进行对比。
-
-
-------------------------------------------------------
 
 1,routers/admin_router/admin.js
 
@@ -106,6 +96,8 @@ routers/admin_router/admin.js 文件里面判断是否有session
 
 
 3,views/admin_views/login.html
+
+4,views/admin_views/index.html
 
 　　　　=>header.html
          =>static_asset 

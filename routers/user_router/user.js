@@ -6,9 +6,9 @@ router.use(async (ctx,next)=>{
     await next();
 })
 
-router.get("/user/login",async(ctx,next)=>{
-    ctx.body="hahahaha";
-    console.log("hahaha");
+router.get("/user",async(ctx,next)=>{
+    await ctx.render("user_views/index")
+
 });
 
 
