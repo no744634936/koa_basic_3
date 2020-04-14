@@ -20,7 +20,11 @@
     "art-template": "^4.13.2",
     "koa": "^2.11.0",
     "koa-art-template": "^1.1.1",
+    "koa-bodyparser": "^4.3.0",
     "koa-router": "^8.0.8",
-    "koa-static": "^5.0.0"
+    "koa-session": "^5.13.1",
+    "koa-static": "^5.0.0",
+    "md5": "^2.2.1",
+    "mongodb": "^3.5.5"
   }
 }

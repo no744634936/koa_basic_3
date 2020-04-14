@@ -7,15 +7,15 @@
 
 		<!-- basic styles -->
 
-		<link href="{{__HOST__}}/admin/css/bootstrap.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="{{__HOST__}}/admin/css/font-awesome.min.css" />
+		<link href="/admin/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/admin/css/font-awesome.min.css" />
 
 		<!-- fonts -->
-		<link rel="stylesheet" href="{{__HOST__}}/admin/css/ace.min.css" />
-		<link rel="stylesheet" href="{{__HOST__}}/admin/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="/admin/css/ace.min.css" />
+		<link rel="stylesheet" href="/admin/css/ace-rtl.min.css" />
 
 
-		<script src='{{__HOST__}}/admin/js/jquery-2.0.3.min.js'></script>
+		<script src='/admin/js/jquery-2.0.3.min.js'></script>
 
 		<style type="text/css">
 			.login-layout{
@@ -41,28 +41,6 @@
 				left:10px;
 			}
 		</style>
-
-		<script>
-
-			$(function(){
-
-				$('#code').click(function(){
-
-					$(this).attr('src','{{__ROOT__}}/admin/login/code?t='+Math.random()*1000)
-				})
-
-				$("#loginForm").submit(function(){
-					if($('#username').val()=='' || $("#password").val()=='' || $("#code").val()){
-
-						alert('用户名或者密码或者验证码不能为空')
-						return false;
-					}
-					return true;
-
-				})
-
-			})
-		</script>
 	</head>
 
 	<body class="login-layout">
@@ -84,7 +62,7 @@
 
 											<div class="space-6"></div>
 
-											<form action="{{__HOST__}}/admin/login/doLogin" method="post" id="loginForm">
+                                            <form action="/admin/doLogin" method="post" id="loginForm">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -100,12 +78,12 @@
 														</span>
 													</label>
 
-													<label class="block clearfix">
+													<!-- <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="text" class="form-control" placeholder="验证吗" name="code" style="width:200px;float:left;" />
 															<img id="code" src="{{__ROOT__}}/admin/login/code" alt="">
 														</span>
-													</label>
+													</label> -->
 
 													<div class="space"></div>
 

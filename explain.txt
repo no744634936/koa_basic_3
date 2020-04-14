@@ -1,5 +1,20 @@
- 显示login page
- 
+
+ 1,down loas node.js
+
+2,create koa2_basic folder
+
+
+3,npm init 
+
+4,npm install koa --save
+
+5,create app.js file
+
+6,add code to app.js file
+
+7, create model ,view ,control　folder
+
+
  npm install koa-router --save
 
 
@@ -13,9 +28,76 @@
 npm install  koa-static --save
 
 
+//连接数据库
+npm install mongodb　--save
+
+//解析传过来的表格里的数据
+npm install koa-bodyparser --save
+
+
+    一定要注意。 app.js里的 app.use(koaBodyparser());一定要在所有路由的最前面。
+    app.use(koaBodyparser());
+    app.use(admin); 
+
+
+//使用session
+npm install koa-session --save
+
+    一定要注意app.js配置文件一定要 使用中间件之前
+    ---------------------------------------------------------
+        //配置静态资源路径
+        app.use(static(__dirname+'/static_asset'));
+
+
+        //配置跟使用session
+        app.keys = ['some secret hurr'];
+        const CONFIG = {
+            key: 'koa:sess', 
+            maxAge: 86400000,
+            overwrite: true, /** (boolean) can overwrite or not (default true) */
+            httpOnly: true, /** (boolean) httpOnly or not (default true) */
+            signed: true, /** (boolean) signed or not (default true) */
+            rolling: true, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */
+            renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
+        };
+        app.use(session(CONFIG, app));
+
+
+        //使用中间件。
+        app.use(koaBodyparser());
+        app.use(admin); 
+    --------------------------------------------------------------------
+
+//密码加密
+npm install md5 --save
+
+
+
+
+
 --------------------------------------------------------------
 
+用户权限功能
 
+当用户登录以后没有logout就关闭了页面那么30分钟以内，可以免登录访问网站内容
+首先当用户登录之后，将用户信息保存到session里面。
+当用户访问后台每一个页面的时候都看一下，session里面有没有保存用户信息。
+如果有就表示已登录，如果没有就表示没登录。
+app.js 文件里面使用session
+addmin.js 文件里面判断是否有session
+
+app.js 文件里面使用session
+routers/admin_router/admin.js 文件里面判断是否有session
+
+
+
+
+------------------------------------------------------
+使用账号密码登录功能
+从数据库取出数据然后与输入的数据进行对比。
+
+
+------------------------------------------------------
 
 1,routers/admin_router/admin.js
 
@@ -28,10 +110,36 @@ npm install  koa-static --save
 　　　　=>header.html
          =>static_asset 
 
+4，model/admin/db.js
+
+
+5,app.js
 
 
 
 
-4,app.js
+
+----------------------------
+
+
+
+疑问，是什么让
+routers/admin_router/admin.js
+routers/user_router/user.js
+这个文件里的
+router.user方法
+不影响彼此的？
+
+
+router.use(async (ctx,next)=>{
+    console.log("user");
+    await next();
+})
+
+
+router.use(async (ctx,next)=>{
+    console.log("admin");
+    await next();
+})
 
 
