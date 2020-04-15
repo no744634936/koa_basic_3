@@ -41,9 +41,7 @@
             </a>
         </li>
 
-
-
-        <li {{if G.url[1]=="manage"}} class="active open" {{/if}}>
+        <li {{if G.current_url_array[2]=="manager"}} class="active open"{{/if}}>
             <a href="#" class="dropdown-toggle">
                 <i class="icon-user-md"></i>
                 <span class="menu-text"> 管理员管理 </span>
@@ -52,20 +50,19 @@
             </a>
 
             <ul class="submenu">
-                <li {{if !G.url[2]}} class="active" {{/if}}>
-                    <a href="{{__ROOT_}}/admin/manage">
+                <li {{if G.current_url_array[3]=="list"}} class="active"{{/if}}>
+                    <a href="/admin/manager/list">
                         <i class="icon-double-angle-right"></i>
                         管理员列表
                     </a>
                 </li>
-                <li  {{if G.url[2]=="add"}} class="active" {{/if}}>
-                    <a href="{{__ROOT_}}/admin/manage/add">
+
+                <li>
+                    <a href="/admin/add">
                         <i class="icon-double-angle-right"></i>
                         增加管理员
                     </a>
                 </li>
-
-
             </ul>
         </li>
 

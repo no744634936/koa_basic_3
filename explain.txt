@@ -76,13 +76,17 @@ npm install md5 --save
 
 
 --------------------------------------------------------------
-logout 功能，
 
-//定义一个全局变量G，然后再每一个页面(view)里都可以使用这个userInfo里面的信息了
-// 为什么只能是admin 里面的view可以使用。user里面的view就不可以使用这个G呢？
-ctx.state.G={
-    adminInfo:ctx.session.adminInfo,
-}
+
+admin首页左侧导航栏选中功能。
+admin_views/public/nav_left.html
+根据当前url的不同来选定不同的项目。
+
+
+
+显示显示管理员列表
+http://localhost:3000/admin/manager/list
+
 
 ---------------
 
@@ -108,30 +112,5 @@ ctx.state.G={
 5,app.js
 
 
-
-
-
-----------------------------
-
-
-
-疑问，是什么让
-routers/admin_router/admin.js
-routers/user_router/user.js
-这个文件里的
-router.user方法
-不影响彼此的？
-
-
-router.use(async (ctx,next)=>{
-    console.log("user");
-    await next();
-})
-
-
-router.use(async (ctx,next)=>{
-    console.log("admin");
-    await next();
-})
 
 

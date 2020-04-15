@@ -43,6 +43,14 @@ module.exports={
     logout:async(ctx,next)=>{
         ctx.session.adminInfo=null;
         ctx.redirect("/admin/login");
+    },
+
+    managerList:async(ctx,next)=>{
+        let result=await DB.find('admin',{});
+
+        await ctx.render("admin_views/list.html",{
+            list:result,
+        })
     }
 
 }
