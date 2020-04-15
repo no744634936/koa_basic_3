@@ -12,7 +12,7 @@ router.use(async (ctx,next)=>{
     let current_url_array=ctx.url.split("/");  //[ '', 'admin', 'doLogin' ]
     console.log(current_url_array);
     
-    //定义一个全局变量G，然后再每一个页面(view)里都可以使用这个adminInfo里面的信息了
+    //定义一个全局变量G，然后再每一个页面(view)里都可以使用这个current_url_array里面的信息了
     ctx.state.G={
         current_url_array:current_url_array,
 
