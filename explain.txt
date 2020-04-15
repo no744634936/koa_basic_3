@@ -72,44 +72,40 @@ npm install koa-session --save
 npm install md5 --save
 
 
+//使用silly-datatime格式化日期。通过过滤器(管道)来格式化日期。
+npm i silly-datetime --save
+
 
 
 
 --------------------------------------------------------------
+管理员登录成功后更行管理员最新登录的时间
 
 
-admin首页左侧导航栏选中功能。
-admin_views/public/nav_left.html
-根据当前url的不同来选定不同的项目。
+将时间("2020-04-15T05:47:20.682Z"  )转换成看得懂得形式。用到过滤器，也叫模板里的管道。
+admin_views/list 文件里面使用 过滤器。
+{{$value.last_login | dateFormat}}
 
-
-
-显示显示管理员列表
-http://localhost:3000/admin/manager/list
-
-
----------------
+------------------------------------------------------------------------
+const sd = require('silly-datetime')
 
 
 
+//配置 koa-art-template模板引擎
+render(app, {
+    root: path.join(__dirname, 'views'),   // 视图的位置
+    extname: '.html',  // 后缀名
+    debug: process.env.NODE_ENV !== 'production',  //是否开启调试模式
 
-1,routers/admin_router/admin.js
-
-
-2,controllers/admin_controller/Admin.js
-
-
-3,views/admin_views/login.html
-
-4,views/admin_views/index.html
-
-　　　　=>header.html
-         =>static_asset 
-
-4，model/admin/db.js
+    //扩展模板里面的方法，用来格式化日期。
+    dateFormat: dateFormat=(value)=>{
+        return sd.format(value, 'YYYY-MM-DD HH:mm');
+    }
+});
 
 
-5,app.js
+
+--------------------------------------------
 
 
 

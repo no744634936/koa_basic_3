@@ -16,19 +16,14 @@ module.exports={
         
         var username=ctx.request.body.username;
         var password=md5(ctx.request.body.password);
-        //前后端都需要做validation
+
         var result=await DB.find('admin',{"username":username,"password":password});
     
         if(result.length>0){
-            //获取信息成功之后将用户信息写入session
+
+            await DB.update("admin",{"_id":DB.getObjectId(result[0]._id)},{last_login:new Date()});
             ctx.session.adminInfo=result[0];
-
-            //redirect 是有路由的时候才能跳转。render是没有路由的时候。
-            //使用redirect的时候显示的是 http://localhost:3000/admin
             ctx.redirect('/admin');
-
-            //使用render 显示的是  http://localhost:3000/admin/doLogin
-            // await ctx.render("admin_views/index.html")
             
         }else{
             //跳出弹窗，点击ok后返回login页面

@@ -1,4 +1,5 @@
 let MongoClient=require("mongodb").MongoClient;
+let ObjectId=require("mongodb").ObjectID;
 let config=require("./config.js");
 
 class Db{
@@ -93,6 +94,12 @@ class Db{
             })
         });
     }
+
+    getObjectId=(id)=>{
+        //mongodb里面查询_id时，需要把字符串转换成object
+        return new ObjectId(id); 
+    }
+
 
 }
 
