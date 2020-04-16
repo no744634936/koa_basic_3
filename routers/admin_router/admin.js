@@ -40,6 +40,9 @@ router.get("/admin/logout",adminController.logout);
 router.post("/admin/doLogin",adminController.doLogin);
 
 router.get("/admin/manager/list",adminController.managerList);
+
+//通过ajax来请求这个接口
+router.get("/admin/manager/changeStatus",adminController.changeStatus);
 router.get("/admin",adminController.index)
 
 module.exports=router.routes();  //启动路由的命令

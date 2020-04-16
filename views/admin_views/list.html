@@ -88,9 +88,9 @@
 
 										<td class="hidden-480">
 											{{if $value.status==1}}
-												<img src="/admin/images/yes.gif" onclick="app.toggle(this,'admin','status','{{@$value._id}}')" />
+												<img src="/admin/images/yes.gif" onclick="ajax.toggle()" />
 											{{else}}
-												<img src="/admin/images/no.gif" onclick="app.toggle(this,'admin','status','{{@$value._id}}')" />
+												<img src="/admin/images/no.gif" onclick="ajax.toggle()" />
 											{{/if}}
 										</td>
 
@@ -158,8 +158,12 @@
 					return 'left';
 				}
 			})
-		</script>
-	
+        </script>
+        
+	<script src="/my_tools/ajax_request.js"></script>
 </body>
 </html>
+
+
+
 

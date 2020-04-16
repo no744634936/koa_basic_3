@@ -76,36 +76,41 @@ npm install md5 --save
 npm i silly-datetime --save
 
 
+//导入koa-jsonp 支持json request
+//用ajax来请求数据的时候必须返回的是json
+//为了让koa支持json就必须安装koa-jsonp
+  npm install koa-jsonp
+
+
+//如何导入xmlhttprequest，来实现ajax请求
+XMLHttpRequest is a built-in object in web browsers.
+It is not distributed with Node; you have to install it separately,
+Install it with npm,
+
+
+npm install xmlhttprequest --save
+
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var xhr = new XMLHttpRequest();
+
+ static_asset/my_tools/ajax_request.js 文件里濡染用到了xmlhttprequest 
+ 但是因为 ajax_request.js文件要导入到html文件里面去，所以就不需要install xmlhttprequest
 
 
 --------------------------------------------------------------
-管理员登录成功后更行管理员最新登录的时间
 
+到 http://localhost:3000/admin/manager/list 里面点击 管理员状态图标。
 
-将时间("2020-04-15T05:47:20.682Z"  )转换成看得懂得形式。用到过滤器，也叫模板里的管道。
-admin_views/list 文件里面使用 过滤器。
-{{$value.last_login | dateFormat}}
+打开浏览器的console 就可以看到异步请求的json数据了
+
+需要阅读的文件。
+
+views/admin_views/list.html
+static_asset/my_tools/ajax_request.js 
+
 
 ------------------------------------------------------------------------
-const sd = require('silly-datetime')
 
-
-
-//配置 koa-art-template模板引擎
-render(app, {
-    root: path.join(__dirname, 'views'),   // 视图的位置
-    extname: '.html',  // 后缀名
-    debug: process.env.NODE_ENV !== 'production',  //是否开启调试模式
-
-    //扩展模板里面的方法，用来格式化日期。
-    dateFormat: dateFormat=(value)=>{
-        return sd.format(value, 'YYYY-MM-DD HH:mm');
-    }
-});
-
-
-
---------------------------------------------
 
 
 

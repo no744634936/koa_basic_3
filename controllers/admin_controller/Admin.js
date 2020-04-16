@@ -16,7 +16,6 @@ module.exports={
         
         var username=ctx.request.body.username;
         var password=md5(ctx.request.body.password);
-
         var result=await DB.find('admin',{"username":username,"password":password});
     
         if(result.length>0){
@@ -46,6 +45,14 @@ module.exports={
         await ctx.render("admin_views/list.html",{
             list:result,
         })
+    },
+
+    changeStatus:async(ctx,next)=>{
+        //通过ajax来使用这个方法。
+        //靠koa-jsonp来实现的这个传递json数据
+        //http://localhost:3000/admin/manager/changeStatus?callback=? 用这个路由来查看是否返回了json数据
+        ctx.body={"message":"good","success":true};
+        
     }
 
 }

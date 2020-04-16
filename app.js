@@ -6,7 +6,9 @@ const user=require("./routers/user_router/user.js");
 const static=require("koa-static");
 const session = require('koa-session');
 const koaBodyparser = require('koa-bodyparser');
-const sd = require('silly-datetime')
+const sd = require('silly-datetime');
+const jsonp=require("koa-jsonp");
+
 const app = new Koa();
 
 
@@ -39,6 +41,8 @@ const CONFIG = {
 app.use(koaBodyparser());
 app.use(static(__dirname+'/static_asset'));
 app.use(session(CONFIG, app));
+app.use(jsonp());
+
 
 
 
