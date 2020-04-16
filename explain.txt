@@ -105,8 +105,14 @@ var xhr = new XMLHttpRequest();
 
 需要阅读的文件。
 
+//传递参数
 views/admin_views/list.html
+
+//请求数据并更改list.html
 static_asset/my_tools/ajax_request.js 
+
+//接收请求并传输数据
+controllers/admin_controller/Admin.js
 
 
 ------------------------------------------------------------------------

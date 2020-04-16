@@ -87,10 +87,11 @@
 										</td>
 
 										<td class="hidden-480">
-											{{if $value.status==1}}
-												<img src="/admin/images/yes.gif" onclick="ajax.toggle()" />
+                                            {{if $value.status==1}}
+                                                <!-- 注意传id要这样传才行   '{{@$value._id}}' -->
+												<img src="/admin/images/yes.gif" onclick="ajax.toggle(this,'admin','{{@$value._id}}')" />
 											{{else}}
-												<img src="/admin/images/no.gif" onclick="ajax.toggle()" />
+												<img src="/admin/images/no.gif" onclick="ajax.toggle(this,'admin','{{@$value._id}}')" />
 											{{/if}}
 										</td>
 

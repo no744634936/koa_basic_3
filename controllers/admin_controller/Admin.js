@@ -48,11 +48,34 @@ module.exports={
     },
 
     changeStatus:async(ctx,next)=>{
-        //通过ajax来使用这个方法。
-        //靠koa-jsonp来实现的这个传递json数据
-        //http://localhost:3000/admin/manager/changeStatus?callback=? 用这个路由来查看是否返回了json数据
-        ctx.body={"message":"good","success":true};
-        
+
+        //console.log(ctx.query);
+        //表里面的status如果是1要改成0，如果是0要改成1.
+
+        //取出url传过来的参数
+        let table=decodeURIComponent(ctx.query.table);
+        let status=decodeURIComponent(ctx.query.status);
+        let id=decodeURIComponent(ctx.query.id);
+
+
+        let data=await DB.find(table,{"_id":DB.getObjectId(id)});
+        if(data.length>0){
+            let json=null;
+            if(data[0][status]==1){
+                json={"status":0}
+            }else{
+                json={"status":1}
+            }
+
+            let updateResult=await DB.update(table,{"_id":DB.getObjectId(id)},json);
+            if(updateResult){
+                ctx.body={"message":"更新成功","success":true}
+            }else{
+                ctx.body={"message":"更新失败","success":false}
+            }
+        }else{
+            ctx.body={"message":"更新失败","success":false}
+        }
     }
 
 }
