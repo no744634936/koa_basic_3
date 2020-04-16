@@ -40,6 +40,11 @@ router.get("/admin/logout",adminController.logout);
 router.post("/admin/doLogin",adminController.doLogin);
 
 router.get("/admin/manager/list",adminController.managerList);
+router.get("/admin/manager/add",adminController.managerAdd);
+router.post("/admin/manager/doAdd",adminController.doManagerAdd);
+
+router.get("/admin/manager/edit",adminController.managerEdit);
+router.post("/admin/manager/doEdit",adminController.doManagerEdit);
 
 //通过ajax来请求这个接口
 router.get("/admin/manager/changeStatus",adminController.changeStatus);

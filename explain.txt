@@ -99,25 +99,20 @@ var xhr = new XMLHttpRequest();
 
 --------------------------------------------------------------
 
-到 http://localhost:3000/admin/manager/list 里面点击 管理员状态图标。
+添加管理员
 
-打开浏览器的console 就可以看到异步请求的json数据了
+http://localhost:3001/admin/manager/add
+http://localhost:3001/admin/manager/doAdd
 
-需要阅读的文件。
 
-//传递参数
-views/admin_views/list.html
+编辑管理员:
+不能修改用户名，只能修改密码
 
-//请求数据并更改list.html
-static_asset/my_tools/ajax_request.js 
-
-//接收请求并传输数据
-controllers/admin_controller/Admin.js
+http://localhost:3001/admin/manager/list
+http://localhost:3001/admin/manager/edit
 
 
 ------------------------------------------------------------------------
-
-
 
 
 

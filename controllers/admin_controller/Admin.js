@@ -76,6 +76,58 @@ module.exports={
         }else{
             ctx.body={"message":"更新失败","success":false}
         }
+    },
+
+    managerAdd:async(ctx)=>{
+        await ctx.render("admin_views/add.html") 
+    },
+
+    doManagerAdd:async(ctx)=>{
+    //1,获取表单提交的数据
+    //2,验证表单数据是否合法。(可以自己添加一些验证条件)
+    //3,在数据库中查询要增加的管理员是否存在。
+    //4,增加管理员
+
+        console.log(ctx.request.body);
+        //这种写法是不对的
+        // let username=ctx.request.username;
+        // let password=ctx.request.password;
+        // let rpassword=ctx.request.rpassword;
+
+
+        let username=ctx.request.body.username;
+        let password=ctx.request.body.password;
+        let rpassword=ctx.request.body.rpassword;
+
+        if(password!=rpassword){
+            ctx.body="<script>alert('密码不一致');location.href='/admin/manager/add'</script>";
+        }else{
+            let findResult=await DB.find("admin",{"username":username});
+            if(findResult.length>0){
+                ctx.body="<script>alert('用户名已存在');location.href='/admin/manager/add'</script>";
+            }else{
+                
+                let addResult=await DB.insert("admin",{"username":username,"password":md5(password),"status":1,"last_login":new Date()});
+                if(addResult){
+                    ctx.body="<script>alert('添加成功');location.href='/admin/manager/list'</script>";
+                }else{
+                    ctx.body="<script>alert('添加失败，请重新添加');location.href='/admin/manager/add'</script>";
+                }
+            }
+        }
+        
+    },
+
+    managerEdit:async(ctx)=>{
+        let id=ctx.query.id;
+        let result=await DB.find("admin",{"_id":DB.getObjectId(id)});
+
+        await ctx.render("admin_views/edit.html",{
+            list:result[0],
+        }) 
+    },
+    doManagerEdit:async(ctx)=>{
+        
     }
 
 }
