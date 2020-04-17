@@ -121,13 +121,42 @@ module.exports={
     managerEdit:async(ctx)=>{
         let id=ctx.query.id;
         let result=await DB.find("admin",{"_id":DB.getObjectId(id)});
-
         await ctx.render("admin_views/edit.html",{
             list:result[0],
         }) 
     },
     doManagerEdit:async(ctx)=>{
-        
+        // console.log(ctx.request.body);
+        try{
+            let password=ctx.request.body.password;
+            let rpassword=ctx.request.body.rpassword;
+            let id=ctx.request.body.id;
+            console.log(password);
+            console.log(id);
+            
+            
+            //密码不为空
+            if(password!=""){
+                if(password!=rpassword){
+                    ctx.body=`<script>alert('密码不一致');location.href='/admin/manager/edit?id=${id}'</script>`;
+                }else{    
+                    let updateResult=await DB.update("admin",{"_id":DB.getObjectId(id)},{"password":md5(password)});
+                    if(updateResult){
+                        ctx.body="<script>alert('修改成功');location.href='/admin/manager/list'</script>";
+                    }else{
+                        ctx.body=`<script>alert('修改失败，请重新修改');location.href='/admin/manager/edit?id=${id}'</script>`;
+                    }
+                }
+            }else{
+                ctx.body=`<script>alert('密码不能为空');location.href='/admin/manager/edit?id=${id}'</script>`;
+            }            
+        }catch(err){
+            console.log(err);
+            console.log("更新失败");
+            
+        }
+
     }
+       
 
 }

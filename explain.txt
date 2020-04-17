@@ -110,6 +110,7 @@ http://localhost:3001/admin/manager/doAdd
 
 http://localhost:3001/admin/manager/list
 http://localhost:3001/admin/manager/edit
+http://localhost:3001/admin/manager/doEdit
 
 
 ------------------------------------------------------------------------
