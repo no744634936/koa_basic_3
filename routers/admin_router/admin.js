@@ -50,6 +50,8 @@ router.get("/admin/manager/edit",adminController.managerEdit);
 router.post("/admin/manager/doEdit",adminController.doManagerEdit);
 
 router.get("/admin/manager/article_categories",adminController.showArticleCategories);
+router.get("/admin/manager/add_categories",adminController.addCategories);
+router.post("/admin/manager/doAddCategories",adminController.doAddCategories);
 
 
 router.get("/admin",adminController.index)

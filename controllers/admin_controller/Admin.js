@@ -1,5 +1,8 @@
 let md5=require('md5');
 let DB=require("../../models/admin_model/db.js");
+//用来生成唯一的id
+let ObjectID = require('mongodb').ObjectID;
+
 module.exports={
     test: async(ctx,next)=>{
         console.log("test");
@@ -163,5 +166,44 @@ module.exports={
         await ctx.render("admin_views/artcle_categories.html",{
             list:result
         });
+    },
+    addCategories:async(ctx)=>{
+        let result=await DB.find("article_categories",{});
+        await ctx.render("admin_views/add_categories.html",{
+            list:result
+        });
+    },
+    doAddCategories:async(ctx)=>{
+
+        let recevied_object=ctx.request.body;
+        let father_id=recevied_object.first_category_id;
+        if(father_id==0){
+            //添加顶级分类
+            recevied_object.secondCategories=[];
+
+            recevied_object.title= recevied_object.s_title;
+            
+            delete recevied_object.s_title;
+            delete recevied_object.first_category_id;
+
+            let addResult=await DB.insert("article_categories",recevied_object);
+            ctx.redirect("/admin/manager/article_categories");
+        }else{
+            //添加二级分类
+
+            //删除里面的顶级分类id
+            delete recevied_object.first_category_id;
+            //添加二级分类id
+            let embeded_document_id=new ObjectID();
+            recevied_object._id=embeded_document_id;
+            //insert A new document in an embedded document
+            let result=await DB.updateEmbededDocument("article_categories",{"_id":DB.getObjectId(father_id)},{"secondCategories":recevied_object});
+            if(result){
+                ctx.redirect("/admin/manager/article_categories")
+            }else{
+                ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/add_categories'</script>`;
+            }
+        }
+
     }
 }

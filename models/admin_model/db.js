@@ -67,6 +67,21 @@ class Db{
     }
     
 
+    //insert A new document in an embedded document
+    updateEmbededDocument=(collectionName,json1,json2)=>{
+
+        return new Promise(async(resolve,reject)=>{
+            let db=await this.connect();
+            db.collection(collectionName).updateOne(json1,{$push:json2},(err,result)=>{
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        });
+    }
+
     insert=(collectionName,json)=>{
         return new Promise(async(resolve,reject)=>{
             let db=await this.connect();
