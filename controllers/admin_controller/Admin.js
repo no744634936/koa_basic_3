@@ -217,6 +217,7 @@ module.exports={
             target=first_category[0];
         }else{
             //如果有child id 显示二级分类
+            //fetch A  document　from an embedded document
             console.log(child_id);
             let first_category=await DB.find("article_categories",{"_id":DB.getObjectId(father_id)});
             first_category[0].secondCategories.forEach(element => {

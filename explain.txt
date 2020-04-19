@@ -100,4 +100,7 @@ var xhr = new XMLHttpRequest();
 注意为了区分是顶级分类还是二级分类。参数带了father_id 跟child_id
 http://localhost:3000/admin/manager/editCategory?father_id=5e9c41e95122f430388fdc4b&child_id=5e9bbfffea2d5f1c981cf124
 
+
+how to  insert A new document to an embedded document
+how to  fetch A  document　from an embedded document
 ------------------------------------------------------------------------
