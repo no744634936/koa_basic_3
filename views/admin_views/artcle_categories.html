@@ -95,7 +95,7 @@
 											<div class="visible-md visible-lg hidden-sm hidden-xs btn-group center">
 
 
-												<a href="/admin/articlecate/edit?id={{@$value._id}}">
+												<a href="/admin/manager/editCategory?father_id={{@$value._id}}">
 
 													<button class="btn btn-xs btn-info">
 														<i class="icon-edit bigger-120"></i>
@@ -117,13 +117,13 @@
 									</tr>
 
 
-
+                                    {{set father_id=$value._id}}
 									{{each $value.secondCategories}}
 											<tr class="subtitle">
 
 
 												<td align="center">
-													-----{{$value.s_title}}
+													-----{{$value.title}}
 												</td>
 
 												<td class="hidden-480">
@@ -137,8 +137,7 @@
 												<td>
 													<div class="visible-md visible-lg hidden-sm hidden-xs btn-group center">
 
-
-														<a href="/admin/articlecate/edit?id={{@$value._id}}">
+														<a href="/admin/manager/editCategory?father_id={{@father_id}}&child_id={{@$value._id}}">
 
 															<button class="btn btn-xs btn-info">
 																<i class="icon-edit bigger-120"></i>

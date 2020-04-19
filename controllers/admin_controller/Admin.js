@@ -205,5 +205,34 @@ module.exports={
             }
         }
 
+    },
+    editCategory:async(ctx)=>{
+        let father_id=ctx.query.father_id;
+        let child_id=ctx.query.child_id;
+        let top_category=await DB.find("article_categories",{});
+        let target=null;
+        //如果没有child id 显示顶级分类
+        if(!child_id){
+            let first_category=await DB.find("article_categories",{"_id":DB.getObjectId(father_id)});
+            target=first_category[0];
+        }else{
+            //如果有child id 显示二级分类
+            console.log(child_id);
+            let first_category=await DB.find("article_categories",{"_id":DB.getObjectId(father_id)});
+            first_category[0].secondCategories.forEach(element => {
+                if(element._id==child_id){
+                    target=element;
+                    //foreach 里面不能使用break 只能用return true
+                    return true;
+                }
+            });
+        }
+
+        await ctx.render("admin_views/edit_category.html",{
+            list:target,
+            top_category:top_category,
+            father_id:father_id
+        });
+        
     }
 }
