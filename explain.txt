@@ -106,6 +106,7 @@ mongodb里面要用到的数据表，因为一二级分类的数量较少，所�
 再shell里面或者 mongodb campass 里面 的learn_mongodb数据库的 article_categories 表里面全去。
 关于embedded document里面的_id.选择简单的数字。真正开发的时候我会用Objectid 的。
 再代码里用这个方法( var result=await DB.find('article_categories',{});  )把数据取出来的时候也是这个格式。
+{"$oid":"5e9bbfffea2d5f1c981cf123"} 是在mongodb里面插入objectID
 
 
 [
@@ -116,13 +117,17 @@ mongodb里面要用到的数据表，因为一二级分类的数量较少，所�
         "status":1,
         "secondCategories":[
             {
-                "_id":1,
-                "s_title":"移动开发",
+                "_id":{"$oid":"5e9bbfffea2d5f1c981cf123"},
+                "title":"移动开发",
+                "description":"test",
+                "keywords":"test,test",
                 "status":1
             },
             {
-                "_id":2,
-                "s_title":"网站开发",
+                "_id":{"$oid":"5e9bbfffea2d5f1c981cf124"},
+                "title":"网站开发",
+                "description":"test",
+                "keywords":"test,test",
                 "status":1
             }
         ]
@@ -134,13 +139,17 @@ mongodb里面要用到的数据表，因为一二级分类的数量较少，所�
         "status":1,
         "secondCategories":[
             {
-                "_id":3,
-                "s_title":"电脑",
+                "_id":{"$oid":"5e9bbfffea2d5f1c981cf125"},
+                "title":"电脑",
+                "description":"test",
+                "keywords":"test,test",
                 "status":1
             },
             {
-                "_id":4,
-                "s_title":"智能手机",
+                "_id":{"$oid":"5e9bbfffea2d5f1c981cf126"},
+                "title":"智能手机",
+                "description":"test",
+                "keywords":"test,test",
                 "status":1
             }
         ]
@@ -153,4 +162,3 @@ mongodb里面要用到的数据表，因为一二级分类的数量较少，所�
         "secondCategories":[]
     }
 ]
-
