@@ -3,7 +3,6 @@
 
 2,create koa2_basic folder
 
-
 3,npm init 
 
 4,npm install koa --save
@@ -13,7 +12,6 @@
 6,add code to app.js file
 
 7, create model ,view ,control　folder
-
 
  npm install koa-router --save
 
@@ -98,22 +96,61 @@ var xhr = new XMLHttpRequest();
 
 
 --------------------------------------------------------------
+分类列表页面
 
-添加管理员
-
-http://localhost:3001/admin/manager/add
-http://localhost:3001/admin/manager/doAdd
-
-
-编辑管理员:
-不能修改用户名，只能修改密码
-
-http://localhost:3001/admin/manager/list
-http://localhost:3001/admin/manager/edit
-http://localhost:3001/admin/manager/doEdit
-
+开发的流程:先写路由，再写view，(view里面有链接)再写路由，再写controller
 
 ------------------------------------------------------------------------
 
+mongodb里面要用到的数据表，因为一二级分类的数量较少，所以我选用 one to many embeded document
+再shell里面或者 mongodb campass 里面 的learn_mongodb数据库的 article_categories 表里面全去。
+关于embedded document里面的_id.选择简单的数字。真正开发的时候我会用Objectid 的。
+再代码里用这个方法( var result=await DB.find('article_categories',{});  )把数据取出来的时候也是这个格式。
 
+
+[
+    {
+        "title":"技术团队",
+        "description":"写代码的",
+        "keywords":"javascript,mongodb,koa,java,swift",
+        "status":1,
+        "secondCategories":[
+            {
+                "_id":1,
+                "s_title":"移动开发",
+                "status":1
+            },
+            {
+                "_id":2,
+                "s_title":"网站开发",
+                "status":1
+            }
+        ]
+    },
+    {
+        "title":"数码产品",
+        "description":"something cool",
+        "keywords":"smartphone,computer,tablet",
+        "status":1,
+        "secondCategories":[
+            {
+                "_id":3,
+                "s_title":"电脑",
+                "status":1
+            },
+            {
+                "_id":4,
+                "s_title":"智能手机",
+                "status":1
+            }
+        ]
+    },
+    {
+        "title":"关于我们",
+        "description":"about us",
+        "keywords":"information",
+        "status":1,
+        "secondCategories":[]
+    }
+]
 

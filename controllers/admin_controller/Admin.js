@@ -155,8 +155,13 @@ module.exports={
             console.log("更新失败");
             
         }
-
+    },
+    showArticleCategories:async(ctx)=>{
+        //find 返回的是一个数组
+        var result=await DB.find('article_categories',{});
+        console.log(result);
+        await ctx.render("admin_views/artcle_categories.html",{
+            list:result
+        });
     }
-       
-
 }
