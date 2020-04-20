@@ -96,11 +96,49 @@ var xhr = new XMLHttpRequest();
 
 
 --------------------------------------------------------------
-编辑 分类
-注意为了区分是顶级分类还是二级分类。参数带了father_id 跟child_id
-http://localhost:3000/admin/manager/editCategory?father_id=5e9c41e95122f430388fdc4b&child_id=5e9bbfffea2d5f1c981cf124
+update embedded documents
 
 
-how to  insert A new document to an embedded document
-how to  fetch A  document　from an embedded document
+http://localhost:3000/admin/manager/editCategory?father_id=5e9c41e95122f430388fdc4c&child_id=5e9bbfffea2d5f1c981cf126
+
+
+//这个是替换匹配到的二级分类。包括id也会被替换掉。
+  db.collection(collectionName).updateOne(
+                    {"secondCategories":{$elemMatch:{"_id":this.getObjectId(child_id)}}},
+                    {$set:{"secondCategories.$":json}},
+                    (err,result)=>{
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+ })
+
+
+ //这个是替换匹配到的二级分类里的keywords字段。将keywords的内容替换成test
+  db.collection(collectionName).updateOne(
+                    {"secondCategories":{$elemMatch:{"_id":this.getObjectId(child_id)}}},
+                    {$set:{"secondCategories.$keywords":"test"}},
+                    (err,result)=>{
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+ })
 ------------------------------------------------------------------------
+
+学到的东西:
+
+        //获取跳转页面之前的页面的url
+        let ref=ctx.request.headers.referer;
+        //获取url里面的参数
+        let param_string=ref.split("?")[1];
+        let urlParams = new URLSearchParams(param_string);
+        let father_id=urlParams.get("father_id");
+        let child_id=urlParams.get("child_id");
+        
+
+
+        //获取当前url 和url里的参数 使用
+        // ctx.query (或者 ctx.request.query)

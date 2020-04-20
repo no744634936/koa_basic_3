@@ -54,6 +54,7 @@ router.get("/admin/manager/add_categories",adminController.addCategories);
 router.post("/admin/manager/doAddCategories",adminController.doAddCategories);
 
 router.get("/admin/manager/editCategory",adminController.editCategory);
+router.post("/admin/manager/doUpdateCategory",adminController.doUpdateCategory);
 
 router.get("/admin",adminController.index)
 

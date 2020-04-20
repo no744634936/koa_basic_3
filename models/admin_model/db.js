@@ -56,7 +56,7 @@ class Db{
     update=(collectionName,json1,json2)=>{
         return new Promise(async(resolve,reject)=>{
             let db=await this.connect();
-            db.collection(collectionName).update(json1,{$set:json2},(err,result)=>{
+            db.collection(collectionName).updateOne(json1,{$set:json2},(err,result)=>{
                 if(err){
                     reject(err);
                 }else{
@@ -66,9 +66,27 @@ class Db{
         });
     }
     
+    updateEmbeddedDocument=(collectionName,child_id,json)=>{
+        return new Promise(async(resolve,reject)=>{
+            let db=await this.connect();
+                console.log("----------------");
+                console.log(json);
+                
+                db.collection(collectionName).updateOne(
+                    {"secondCategories":{$elemMatch:{"_id":this.getObjectId(child_id)}}},
+                    {$set:{"secondCategories.$":json}},
+                    (err,result)=>{
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(result);
+                    }
+                })
+        });
+    }
 
     //insert A new document in an embedded document
-    updateEmbededDocument=(collectionName,json1,json2)=>{
+    insertEmbededDocument=(collectionName,json1,json2)=>{
 
         return new Promise(async(resolve,reject)=>{
             let db=await this.connect();

@@ -197,7 +197,7 @@ module.exports={
             let embeded_document_id=new ObjectID();
             recevied_object._id=embeded_document_id;
             //insert A new document in an embedded document
-            let result=await DB.updateEmbededDocument("article_categories",{"_id":DB.getObjectId(father_id)},{"secondCategories":recevied_object});
+            let result=await DB.insertEmbededDocument("article_categories",{"_id":DB.getObjectId(father_id)},{"secondCategories":recevied_object});
             if(result){
                 ctx.redirect("/admin/manager/article_categories")
             }else{
@@ -235,5 +235,37 @@ module.exports={
             father_id:father_id
         });
         
+    },
+    doUpdateCategory:async(ctx)=>{
+        let recevied_object=ctx.request.body;
+        delete recevied_object.first_category_id;
+
+        //获取跳转页面之前的页面的url
+        let ref=ctx.request.headers.referer;
+        //获取url里面的参数
+        let param_string=ref.split("?")[1];
+        let urlParams = new URLSearchParams(param_string);
+        let father_id=urlParams.get("father_id");
+        let child_id=urlParams.get("child_id");
+        
+        //获取当前url 和url里的参数 使用
+        // ctx.query (或者 ctx.request.query)
+        let result=null;
+        if(!child_id){
+           result=await DB.update("article_categories",{"_id":DB.getObjectId(father_id)},recevied_object);
+        }else{
+          //因为updateEmbeddedDocument方法是将embedded document 的所有项目都替换，所以_id也必须替换。不然_id会不见。
+           recevied_object._id=DB.getObjectId(child_id);
+           result=await DB.updateEmbeddedDocument(
+                "article_categories",
+                child_id,
+                recevied_object
+               )
+        }
+        if(result){
+            ctx.redirect("/admin/manager/article_categories");
+        }else{
+            ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/editCategory?father_id=${father_id}&child_id=${child_id}'</script>`;
+        }
     }
 }
