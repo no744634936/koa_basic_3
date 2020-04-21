@@ -102,9 +102,7 @@
 													</button>
 												</a>
 
-												<a href="/admin/articlecate/delete?id={{@$value._id}}">
-
-
+												<a href="/admin/manager/deleteCategory?father_id={{@$value._id}}">
 													<button class="btn btn-xs btn-danger">
 														<i class="icon-trash bigger-120"></i>
 													</button>
@@ -120,8 +118,6 @@
                                     {{set father_id=$value._id}}
 									{{each $value.secondCategories}}
 											<tr class="subtitle">
-
-
 												<td align="center">
 													-----{{$value.title}}
 												</td>
@@ -144,7 +140,7 @@
 															</button>
 														</a>
 
-														<a href="/admin/articlecate/delete?id={{@$value._id}}">
+														<a href="/admin/manager/deleteCategory?father_id={{@father_id}}&child_id={{@$value._id}}">
 
 
 															<button class="btn btn-xs btn-danger">

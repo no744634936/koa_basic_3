@@ -128,6 +128,22 @@ class Db{
         });
     }
 
+    removeEmbeddedDocument=(collectionName,father_id,child_id)=>{
+        return new Promise(async(resolve,reject)=>{
+            let db=await this.connect();
+            db.collection(collectionName).update(
+                {"_id":this.getObjectId(father_id)},
+                {$pull:{"secondCategories":{"_id":this.getObjectId(child_id)}}},
+                (err,result)=>{
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(result);
+                }
+            })
+        });
+    }
+
     getObjectId=(id)=>{
         //mongodb里面查询_id时，需要把字符串转换成object
         return new ObjectId(id); 

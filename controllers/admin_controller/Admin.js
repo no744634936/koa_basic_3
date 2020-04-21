@@ -162,7 +162,6 @@ module.exports={
     showArticleCategories:async(ctx)=>{
         //find 返回的是一个数组
         var result=await DB.find('article_categories',{});
-        console.log(result);
         await ctx.render("admin_views/artcle_categories.html",{
             list:result
         });
@@ -218,7 +217,6 @@ module.exports={
         }else{
             //如果有child id 显示二级分类
             //fetch A  document　from an embedded document
-            console.log(child_id);
             let first_category=await DB.find("article_categories",{"_id":DB.getObjectId(father_id)});
             first_category[0].secondCategories.forEach(element => {
                 if(element._id==child_id){
@@ -266,6 +264,19 @@ module.exports={
             ctx.redirect("/admin/manager/article_categories");
         }else{
             ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/editCategory?father_id=${father_id}&child_id=${child_id}'</script>`;
+        }
+    },
+    deleteCategory:async(ctx)=>{
+        let father_id=ctx.query.father_id;
+        let child_id=ctx.query.child_id;
+        if(!child_id){
+            result=await DB.remove("article_categories",{"_id":DB.getObjectId(father_id)})
+            console.log("delete success");
+            
+        }else{
+            result=await DB.removeEmbeddedDocument("article_categories",father_id,child_id);
+            console.log("heiehie");
+            
         }
     }
 }

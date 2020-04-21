@@ -64,7 +64,7 @@
 									<label class="col-sm-2 control-label no-padding-right" for="title">分类名称:</label>
 
 									<div class="col-sm-10">
-										<input type="text" id="title"  name="s_title" class="col-xs-10 col-sm-5" />
+										<input type="text" id="title"  name="title" class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
 
@@ -74,7 +74,7 @@
 									<div class="col-sm-10">
 										<select name="first_category_id" id="pid">
 											<option value="0">--顶级分类--</option>
-											{{each top_category}}
+											{{each list}}
                                             <!-- 这里必须有个＠否者id会带引号 -->
 											<option value="{{@$value._id}}" {{if $value._id==father_id}} selected {{/if}}>{{$value.title}}</option>
 											{{/each}}

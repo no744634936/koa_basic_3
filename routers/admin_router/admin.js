@@ -56,6 +56,8 @@ router.post("/admin/manager/doAddCategories",adminController.doAddCategories);
 router.get("/admin/manager/editCategory",adminController.editCategory);
 router.post("/admin/manager/doUpdateCategory",adminController.doUpdateCategory);
 
+router.get("/admin/manager/deleteCategory",adminController.deleteCategory);
+
 router.get("/admin",adminController.index)
 
 module.exports=router.routes();  //启动路由的命令
