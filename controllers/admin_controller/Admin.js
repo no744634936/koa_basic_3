@@ -271,12 +271,10 @@ module.exports={
         let child_id=ctx.query.child_id;
         if(!child_id){
             result=await DB.remove("article_categories",{"_id":DB.getObjectId(father_id)})
-            console.log("delete success");
-            
+            ctx.redirect("/admin/manager/article_categories");
         }else{
             result=await DB.removeEmbeddedDocument("article_categories",father_id,child_id);
-            console.log("heiehie");
-            
+            ctx.redirect("/admin/manager/article_categories");
         }
     }
 }
