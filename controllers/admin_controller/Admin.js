@@ -276,5 +276,8 @@ module.exports={
             result=await DB.removeEmbeddedDocument("article_categories",father_id,child_id);
             ctx.redirect("/admin/manager/article_categories");
         }
+    },
+    articlesList:async(ctx)=>{
+        await ctx.render("admin_views/articles_list.html");
     }
 }
