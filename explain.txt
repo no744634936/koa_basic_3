@@ -95,8 +95,8 @@ var xhr = new XMLHttpRequest();
  但是因为 ajax_request.js文件要导入到html文件里面去，所以就不需要install xmlhttprequest
 
 
---------------------------------------------------------------
-remove embedded document from array
+---------------------------------
+写代码的时候一定要先写添加数据的功能然后再写数据显示功能。不然数据的处理会很麻烦。
 
-http://localhost:3000/admin/manager/deleteCategory?father_id=5e9c41e95122f430388fdc4c&child_id=5e9bbfffea2d5f1c981cf126
+
 ------------------------------------------------------------------------
