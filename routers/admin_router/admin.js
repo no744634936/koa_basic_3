@@ -22,7 +22,10 @@ let upload=multer({storage:storage})
 
 router.use(async (ctx,next)=>{
     console.log("admin");
-    
+    //模板引擎配置全局的变量
+    ctx.state.__HOST__='http://'+ctx.request.header.host;
+
+
     let current_url_array=ctx.url.split("/");
     console.log(current_url_array);
     ctx.state.G={
@@ -68,6 +71,12 @@ router.get("/admin/manager/deleteCategory",adminController.deleteCategory);
 router.get("/admin/manager/addPicture",adminController.addPicture)
 //single里面的名字是，view里面图片输入框的name的值。
 router.post("/admin/manager/doAddPicture",upload.single('picture'),adminController.doAddPicture);
+
+
+//测试富文本编辑器功能
+router.get("/admin/manager/addRichText",adminController.addRichText);
+router.post("/admin/manager/doAddRichText",adminController.doAddRichText);
+
 
 router.get("/admin/manager/articlesList",adminController.articlesList);
 

@@ -277,7 +277,6 @@ module.exports={
             ctx.redirect("/admin/manager/article_categories");
         }
     },
-
     addPicture:async(ctx)=>{
         await ctx.render("admin_views/add_picture.html");
     },
@@ -289,7 +288,17 @@ module.exports={
         //返回这个数据
         //{"filename":"1587700475877.jpg","body":{"title":"test22","description":"122334"}}
     },
+    addRichText:async(ctx)=>{
+        await ctx.render("admin_views/add_rich_text_editor.html");
+    },
     articlesList:async(ctx)=>{
         await ctx.render("admin_views/articles_list.html");
+    },
+    doAddRichText:async(ctx)=>{
+        console.log(ctx.request.body);
+        console.log("haahha");
+        
+        
+        ctx.body={body:ctx.request.body};
     }
 }

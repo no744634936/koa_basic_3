@@ -95,16 +95,28 @@ var xhr = new XMLHttpRequest();
  但是因为 ajax_request.js文件要导入到html文件里面去，所以就不需要install xmlhttprequest
 
 
+//添加上传图片的包
+
+
+
+//添加富文本编辑器
+npm install  ko2-ueditor --save;
+
 ---------------------------------
 写代码的时候一定要先写添加数据的功能然后再写数据显示功能。不然数据的处理会很麻烦。
 
 把图片添加到文件夹public/upload_pictures 的功能
 http://localhost:3000/admin/manager/addPicture
 
-
-
 koa 里面不需要导入file module 。不需要这个constfile=require('file');
 
 
-
+添加富文本编辑器，这一章节只是把富文本编辑器表示出来了。
+下一章节要实现放入图片然后传递的功能。
+http://localhost:3000/admin/manager/addRichText
 ------------------------------------------------------------------------
+结合项目中的pdf文件查看
+
+下载完成以后把官方例子中的 example->public->ueditor 复制到我的static_asset文件夹里面去。
+
+<!-- 注意 不传递图片或文件的的时候一定要把 enctype="multipart/form-data" 属性从form中删掉-->
