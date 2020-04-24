@@ -277,6 +277,18 @@ module.exports={
             ctx.redirect("/admin/manager/article_categories");
         }
     },
+
+    addPicture:async(ctx)=>{
+        await ctx.render("admin_views/add_picture.html");
+    },
+    doAddPicture:(ctx)=>{
+        ctx.body={ 
+            filename:ctx.req.file.filename,//返回文件名 
+            body:ctx.req.body 
+        }
+        //返回这个数据
+        //{"filename":"1587700475877.jpg","body":{"title":"test22","description":"122334"}}
+    },
     articlesList:async(ctx)=>{
         await ctx.render("admin_views/articles_list.html");
     }

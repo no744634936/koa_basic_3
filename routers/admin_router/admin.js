@@ -2,23 +2,33 @@
 let adminController=require("../../controllers/admin_controller/Admin.js");
 let router=require("koa-router")()
 
+const multer=require('koa-multer');
+// const file=require('file');
 
-//当用户输入一个包含admin的url的时候（）都会首先经过这个路由
-//让后通过await next(); 像下继续匹配路由
+let storage=multer.diskStorage({
+    //文件保存路径 
+    destination:function(req,file,cb){ 
+        cb(null,'public/upload_pictures') //注意路径必须存在 
+    }, 
+    //修改文件名称 
+    filename:function(req,file,cb){
+         let fileFormat=(file.originalname).split("."); 
+         cb(null,Date.now()+"."+fileFormat[fileFormat.length-1]); 
+    } 
+})
+//加载配置
+let upload=multer({storage:storage})
+
 
 router.use(async (ctx,next)=>{
     console.log("admin");
     
-    let current_url_array=ctx.url.split("/");  //[ '', 'admin', 'doLogin' ]
+    let current_url_array=ctx.url.split("/");
     console.log(current_url_array);
-    
-    //定义一个全局变量G，然后再每一个页面(view)里都可以使用这个current_url_array里面的信息了
     ctx.state.G={
         current_url_array:current_url_array,
-
         adminInfo:ctx.session.adminInfo,
     }
-
 
     if(ctx.session.adminInfo){
         await next();
@@ -39,12 +49,10 @@ router.get("/admin/login",adminController.login);
 router.get("/admin/logout",adminController.logout);
 router.post("/admin/doLogin",adminController.doLogin);
 
-
 router.get("/admin/manager/list",adminController.managerList);
 router.get("/admin/manager/add",adminController.managerAdd);
 router.post("/admin/manager/doAdd",adminController.doManagerAdd);
 router.get("/admin/manager/changeStatus",adminController.changeStatus);//通过ajax来请求这个接口
-
 
 router.get("/admin/manager/edit",adminController.managerEdit);
 router.post("/admin/manager/doEdit",adminController.doManagerEdit);
@@ -56,6 +64,10 @@ router.post("/admin/manager/doAddCategories",adminController.doAddCategories);
 router.get("/admin/manager/editCategory",adminController.editCategory);
 router.post("/admin/manager/doUpdateCategory",adminController.doUpdateCategory);
 router.get("/admin/manager/deleteCategory",adminController.deleteCategory);
+
+router.get("/admin/manager/addPicture",adminController.addPicture)
+//single里面的名字是，view里面图片输入框的name的值。
+router.post("/admin/manager/doAddPicture",upload.single('picture'),adminController.doAddPicture);
 
 router.get("/admin/manager/articlesList",adminController.articlesList);
 

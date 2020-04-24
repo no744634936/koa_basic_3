@@ -98,5 +98,13 @@ var xhr = new XMLHttpRequest();
 ---------------------------------
 写代码的时候一定要先写添加数据的功能然后再写数据显示功能。不然数据的处理会很麻烦。
 
+把图片添加到文件夹public/upload_pictures 的功能
+http://localhost:3000/admin/manager/addPicture
+
+
+
+koa 里面不需要导入file module 。不需要这个constfile=require('file');
+
+
 
 ------------------------------------------------------------------------
