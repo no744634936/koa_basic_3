@@ -1,9 +1,8 @@
 
 let adminController=require("../../controllers/admin_controller/Admin.js");
 let router=require("koa-router")()
-
 const multer=require('koa-multer');
-// const file=require('file');
+const ueditor = require('koa2-ueditor')
 
 let storage=multer.diskStorage({
     //文件保存路径 
@@ -76,6 +75,18 @@ router.post("/admin/manager/doAddPicture",upload.single('picture'),adminControll
 //测试富文本编辑器功能
 router.get("/admin/manager/addRichText",adminController.addRichText);
 router.post("/admin/manager/doAddRichText",adminController.doAddRichText);
+
+// 这个 '/editor/controller' 是富文本编辑器里面上传图片，点击确认时的url
+//把上传的图片放到 static/upload/ueditor/image/20200424 文件夹里面去。文件名为上传时的文件名。
+//记住图片，js等文件一定要放进static_asset里面去，否则取不出来。因为我一开始就设置了静态资源的路径。
+//一定要把/editor/controller  改成 /admin/manager/editor/controller。要登录了才能通过富文本编辑器来传递图片。
+//否者黑客可以通过localhost:3000/editor/controller 来攻击网站。
+//记得将 ueditor.config.js 里面的 serverUrl改为 "/admin/manager/editor/controller"
+router.all('/admin/manager/editor/controller', ueditor(['static_asset', {        
+	"imageAllowFiles": [".png", ".jpg", ".jpeg"],
+	"imagePathFormat": "/upload/ueditor/image/{yyyy}{mm}{dd}/{filename}"  // 保存为原文件名
+}]))
+
 
 
 router.get("/admin/manager/articlesList",adminController.articlesList);
