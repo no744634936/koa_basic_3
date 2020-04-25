@@ -281,8 +281,11 @@ module.exports={
         await ctx.render("admin_views/add_picture.html");
     },
     doAddPicture:(ctx)=>{
+        //如果没有提交封面图片系统会报错。Cannot read property 'filename' of undefined
+        //所以加一个判断来修正。
+        let fileName=ctx.req.file ? ctx.req.file.filename : "";
         ctx.body={ 
-            filename:ctx.req.file.filename,//返回文件名 
+            filename:fileName,//返回文件名 
             body:ctx.req.body 
         }
         //返回这个数据
@@ -300,5 +303,41 @@ module.exports={
         
         
         ctx.body={body:ctx.request.body};
+    },
+    addArticle:async(ctx)=>{
+        let result=await DB.find('article_categories',{});
+        await ctx.render("admin_views/add_article",{
+            list:result
+        });
+    },
+    doAddArticle:async(ctx)=>{
+        console.log("hahahah");
+
+
+    let pid=ctx.req.body.pid;
+    let catename=ctx.req.body.categoryName ? ctx.req.body.categoryName.trim():"";
+    let title=ctx.req.body.title ? ctx.req.body.title.trim():"";
+    let author=ctx.req.body.author ? ctx.req.body.author.trim():"";
+    let status=ctx.req.body.status;
+    let is_best=ctx.req.body.is_best;
+    let is_hot=ctx.req.body.is_hot;
+    let is_new=ctx.req.body.is_new;
+    let keywords=ctx.req.body.keywords;
+    let description=ctx.req.body.description || '';
+    let content=ctx.req.body.content ||'';
+    let img_url=ctx.req.file? ctx.req.file.path :'';
+
+    //属性的简写
+    let json={
+        pid,catename,title,author,status,is_best,is_hot,is_new,keywords,description,content,img_url
+    }
+
+    var result=DB.insert('articles',json);
+    if(result){
+        console.log("hahaha");
+        ctx.redirect("/admin/manager/articlesList");
+    }
+        console.log("failed");
+        
     }
 }

@@ -7,7 +7,7 @@ const ueditor = require('koa2-ueditor')
 let storage=multer.diskStorage({
     //文件保存路径 
     destination:function(req,file,cb){ 
-        cb(null,'public/upload_pictures') //注意路径必须存在 
+        cb(null,'static_asset/article_cover_picture') //注意路径必须存在,也就是说
     }, 
     //修改文件名称 
     filename:function(req,file,cb){
@@ -71,7 +71,6 @@ router.get("/admin/manager/addPicture",adminController.addPicture)
 //single里面的名字是，view里面图片输入框的name的值。
 router.post("/admin/manager/doAddPicture",upload.single('picture'),adminController.doAddPicture);
 
-
 //测试富文本编辑器功能
 router.get("/admin/manager/addRichText",adminController.addRichText);
 router.post("/admin/manager/doAddRichText",adminController.doAddRichText);
@@ -87,6 +86,10 @@ router.all('/admin/manager/editor/controller', ueditor(['static_asset', {
 	"imagePathFormat": "/upload/ueditor/image/{yyyy}{mm}{dd}/{filename}"  // 保存为原文件名
 }]))
 
+
+//添加文章内容的路由
+router.get("/admin/manager/addArticle",adminController.addArticle);
+router.post("/admin/manager/DoAddArticle",upload.single("img"),adminController.doAddArticle);
 
 
 router.get("/admin/manager/articlesList",adminController.articlesList);
