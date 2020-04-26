@@ -302,12 +302,17 @@ module.exports={
         //如果url为http://localhost:3001/admin/manager/articlesList?page=1　加载第一页数据。如果没有page这个参数也返回第一页参数。
         let page=ctx.query.page||1;
         let pageSize=5;
+        let count=await DB.count("articles",{})
+        let totalPages=Math.ceil(count/pageSize);
+        
         let result=await DB.find("articles",{},{},{    //测试输入四个参数的时候是否正确表示。
             page:page,
             pageSize:pageSize
         })
         await ctx.render("admin_views/articles_list.html",{
             list:result,
+            currentPage:page,
+            totalPages:totalPages
         });
     },
     doAddRichText:async(ctx)=>{

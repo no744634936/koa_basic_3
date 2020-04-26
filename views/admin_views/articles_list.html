@@ -141,7 +141,7 @@
 								</tbody>
 							</table>
 
-							<div id="page" class="pagination"></div>
+							<div id="pagination" class="pagination"></div>
 						</div>
 
 					</div>
@@ -154,7 +154,29 @@
 			</a>
         </div><!-- /.main-container -->
         
-	{{include './public/footer.html'}}
+    {{include './public/footer.html'}}
+
+    <!-- 导入的时候一定要放到jp后面 -->
+    <script src="/my_tools/jqPaginator.js"></script>
+    <script>
+        $('#pagination').jqPaginator({
+            totalPages: {{totalPages}},
+
+            //可以看见的是5页
+            visiblePages: 5,
+            //当前是第几页就选中第几页
+            currentPage: {{currentPage}},
+            onPageChange: function (num, type) {
+                //num是点击的页码数
+                //type有change跟init两种。init是第一次显示页码的时候。change是点击页码的时候，
+                console.log(num,type);     
+                if(type=="change"){
+                    location.href="/admin/manager/articlesList?page="+num
+                }
+            }
+        });
+    </script>
+    
 	<script type="text/javascript">
 		jQuery(function($) {
 

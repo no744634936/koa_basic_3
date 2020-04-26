@@ -102,16 +102,96 @@ var xhr = new XMLHttpRequest();
 //添加富文本编辑器
 npm install  ko2-ueditor --save;
 
+
+
 ---------------------------------
 显示article 列表。
 分页功能。
 db库里面封装分页查询的方法。重构find方法。
 http://localhost:3001/admin/manager/articlesList
 
-手动输入:
-http://localhost:3001/admin/manager/articlesList?page=1
+
+导包显示分页页码。
 
 
+//分页包。
+1,下载jqpaginator.js文件并放入static_asset/my_tool文件夹
+2,因为这个jqpaginator.js 是jquery写的所以要放到footer后面引入
 
 
+    {{include './public/footer.html'}}
+
+    <!-- 导入的时候一定要放到jp后面 -->
+    <script src="/my_tools/jqPaginator.js"></script>
+    <script>
+        $('#pagination').jqPaginator({
+            totalPages: 100,
+            visiblePages: 10,
+            currentPage: 1,
+            onPageChange: function (num, type) {
+                $('#text').html('当前第' + num + '页');
+            }
+        });
+    </script>
+
+
+3，页面里面显示页码 框。 class="pagination" 是bootstrap的样式。
+  <div id="pagination" class="pagination"></div>
+
+
+4,修改代码，让代码跟url有联系
+
+    <script>
+        $('#pagination').jqPaginator({
+            totalPages: 100,
+            visiblePages: 10,
+            currentPage: 1,
+            onPageChange: function (num, type) {
+                //num是点击的页码数
+                //type有change跟init两种。init是第一次显示页码的时候。change是点击页码的时候，
+                console.log(num,type);     
+                if(type=="change"){
+                    location.href="/admin/manager/articlesList?page="+num
+                }
+            }
+        });
+    </script>
+
+5，总页数不应该是100.我需要总页数。所以要在db.js文件里封装一个方法来取得数据记录的总数。
+   
+    count=(collectionName,json)=>{
+        return new Promise(async(resolve,reject)=>{
+            let db=await this.connect();
+            db.collection(collectionName).countDocuments(json,(err,result)=>{
+                if(err){
+                    reject(err);
+                    return
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+    }
+
+6，绑定从后台方法里传过来的数据
+
+<script>
+        $('#pagination').jqPaginator({
+            totalPages: {{totalPages}},
+
+            //可以看见的是5页
+            visiblePages: 5,
+            
+            //当前是第几页就选中第几页
+            currentPage: {{currentPage}},
+            onPageChange: function (num, type) {
+                //num是点击的页码数
+                //type有change跟init两种。init是第一次显示页码的时候。change是点击页码的时候，
+                console.log(num,type);     
+                if(type=="change"){
+                    location.href="/admin/manager/articlesList?page="+num
+                }
+            }
+        });
+    </script>
 ------------------------------------------------------------------------

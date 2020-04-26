@@ -116,7 +116,7 @@ class Db{
             try{
 
                 let db=await this.connect();
-                let result=db.collection(collectionName).find(json1,{fields:attr}).skip(skipNum).limit(pageSize);
+                let result=db.collection(collectionName).find(json1,{projection:attr}).skip(skipNum).limit(pageSize);
                 result.toArray((err,docs)=>{
                     resolve(docs);
                 })
@@ -181,7 +181,7 @@ class Db{
         try{
 
             let db=await this.connect();
-            let result=db.collection(collectionName).find(json1,{fields:attr}).skip(skipNum).limit(pageSize);
+            let result=db.collection(collectionName).find(json1,{projection:attr}).skip(skipNum).limit(pageSize);
             result.toArray((err,docs)=>{
                 resolve(docs);
             })
@@ -288,6 +288,23 @@ class Db{
         //mongodb里面查询_id时，需要把字符串转换成object
         return new ObjectId(id); 
     }
+
+    //统计数据表数据的数量。
+
+    count=(collectionName,json)=>{
+        return new Promise(async(resolve,reject)=>{
+            let db=await this.connect();
+            db.collection(collectionName).countDocuments(json,(err,result)=>{
+                if(err){
+                    reject(err);
+                    return
+                }else{
+                    resolve(result);
+                }
+            })
+        })
+    }
+
 
 
 }
