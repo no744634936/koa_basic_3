@@ -103,32 +103,15 @@ var xhr = new XMLHttpRequest();
 npm install  ko2-ueditor --save;
 
 ---------------------------------
-写代码的时候一定要先写添加数据的功能然后再写数据显示功能。不然数据的处理会很麻烦。
+显示article 列表。
+分页功能。
+db库里面封装分页查询的方法。重构find方法。
+http://localhost:3001/admin/manager/articlesList
 
-把图片添加到文件夹public/upload_pictures 的功能
-http://localhost:3000/admin/manager/addPicture
-
-koa 里面不需要导入file module 。不需要这个constfile=require('file');
-
-
-添加富文本编辑器，实现放入图片然后传递的功能。
-http://localhost:3000/admin/manager/addRichText
-
-
-
-对应的 koa 业务逻辑中配置 koa2-ueditor 模块 ：
-const ueditor = require('koa2-ueditor')
-router.all('/editor/controller', ueditor(['public', { "imageAllowFiles": [".png", ".jpg", ".jpeg"] "imagePathFormat": "/upload/ueditor/image/{yyyy}{mm}{dd}/{filename}"
-}]))
-
-
+手动输入:
+http://localhost:3001/admin/manager/articlesList?page=1
 
 
 
 
 ------------------------------------------------------------------------
-结合项目中的pdf文件查看
-
-下载完成以后把官方例子中的 example->public->ueditor 复制到我的static_asset文件夹里面去。
-
-<!-- 注意 不传递图片或文件的的时候一定要把 enctype="multipart/form-data" 属性从form中删掉-->

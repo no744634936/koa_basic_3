@@ -37,12 +37,86 @@ class Db{
 
     }
 
-    find=(collectionName,json)=>{
+    // find=(collectionName,json)=>{
+    //     return new Promise(async(resolve,reject)=>{
+    //         try{
+
+    //             let db=await this.connect();
+    //             let result=db.collection(collectionName).find(json);
+    //             result.toArray((err,docs)=>{
+    //                 resolve(docs);
+    //             })
+    //         }catch(err){
+    //             reject(err);
+    //         }
+    //     })
+    // }
+
+    
+    /*
+    DB.find("articles",{})  返回所有数据
+
+    DB.find("articles",{},{"title":1})  返回所有数据，只返回title
+
+    DB.find("articles",{},{"title":1},{ 返回第二页的数据
+        page:2,
+        pageSize:5
+    })
+
+    js中实参和形参可以不一样，arguments 对象接收实参传过来的数据。
+    */
+
+
+
+/*
+   find(collectionName,json1,json2,json3){
+    
+        //注意箭头函数里面不能用arguments,只能用...args
+        let attr=null;
+        let skipNum=null;
+        let pageSize=null;
+        if(arguments.length==2){
+                //当传入两个参数时，
+                //collectionName为表名
+                //json1为空object
+                //,json2为空object
+                //json3里面包含了skipNum跟 pageSize，如果没有传json3，那么skipNum跟pageSize为零
+                //db.articles.find({},{}),skip(0),limit(0); 的意思就是查询全部
+
+                 attr={};
+                 skipNum=0;
+                 pageSize=0;
+        }else if(arguments.length==3){
+                //当传入三个参数时
+                //collectionName为表名
+                //json1，为空object
+                //json2 有值为{"title":1} 意思是只查title字段。
+                //json3里面包含了skipNum跟 pageSize，如果没有传json3，那么skipNum跟pageSize为零
+                //db.articles.find({},{"title":1}),skip(0).limit(0);
+                 attr=json2;
+                 skipNum=0;
+                 pageSize=0;
+        }else if(arguments.length==4){
+                //当传入四个参数时
+                //collectionName为表名
+                //json1，为空object
+                //json2 有值为{"title":1} 意思是只查title字段。
+                //json3里面包含了skipNum跟 pageSize有值。
+
+                //db.articles.find({},{"title":1}),skip(5).limit(5);   一页5条的情况下是，返回第二也的5条记录。
+                 attr=json2; 
+                 let page=json3.page||1;           //如果传了json3但是里面没有page那么默认为1.
+                 pageSize=json3.pageSize ||10; //如果传了json3但是里面没有pageSize,那么默认为10，
+                 skipNum=(page-1)*pageSize;
+        }else{
+            console.log("传入的参数出现了错误");
+            
+        }
         return new Promise(async(resolve,reject)=>{
             try{
 
                 let db=await this.connect();
-                let result=db.collection(collectionName).find(json);
+                let result=db.collection(collectionName).find(json1,{fields:attr}).skip(skipNum).limit(pageSize);
                 result.toArray((err,docs)=>{
                     resolve(docs);
                 })
@@ -50,7 +124,73 @@ class Db{
                 reject(err);
             }
         })
+
+   }
+*/
+   find=(...args)=>{
+    
+    //注意箭头函数里面不能用arguments只能使用...args
+
+
+    let attr=null;
+    let skipNum=null;
+    let pageSize=null;
+
+    let collectionName=args[0];
+    let json1=args[1];
+    let json2=args[2];
+    let json3=args[3];
+    if(args.length==2){
+            //当传入两个参数时，
+            //collectionName为表名
+            //json1为空object
+            //,json2为空object
+            //json3里面包含了skipNum跟 pageSize，如果没有传json3，那么skipNum跟pageSize为零
+            //db.articles.find({},{}),skip(0),limit(0); 的意思就是查询全部
+
+             attr={};
+             skipNum=0;
+             pageSize=0;
+    }else if(args.length==3){
+            //当传入三个参数时
+            //collectionName为表名
+            //json1，为空object
+            //json2 有值为{"title":1} 意思是只查title字段。
+            //json3里面包含了skipNum跟 pageSize，如果没有传json3，那么skipNum跟pageSize为零
+            //db.articles.find({},{"title":1}),skip(0).limit(0);
+             attr=json2;
+             skipNum=0;
+             pageSize=0;
+    }else if(args.length==4){
+            //当传入四个参数时
+            //collectionName为表名
+            //json1，为空object
+            //json2 有值为{"title":1} 意思是只查title字段。
+            //json3里面包含了skipNum跟 pageSize有值。
+
+            //db.articles.find({},{"title":1}),skip(5).limit(5);   一页5条的情况下是，返回第二也的5条记录。
+             attr=json2; 
+             let page=json3.page||1;           //如果传了json3但是里面没有page那么默认为1.
+             pageSize=json3.pageSize ||10; //如果传了json3但是里面没有pageSize,那么默认为10，
+             skipNum=(page-1)*pageSize;
+    }else{
+        console.log("传入的参数出现了错误");
+        
     }
+    return new Promise(async(resolve,reject)=>{
+        try{
+
+            let db=await this.connect();
+            let result=db.collection(collectionName).find(json1,{fields:attr}).skip(skipNum).limit(pageSize);
+            result.toArray((err,docs)=>{
+                resolve(docs);
+            })
+        }catch(err){
+            reject(err);
+        }
+    })
+
+}
 
     //json1 需要更新的对象， json2更新的信息
     update=(collectionName,json1,json2)=>{
@@ -151,8 +291,6 @@ class Db{
 
 
 }
-
-
 
 // let test1=Db.getInstance();
 

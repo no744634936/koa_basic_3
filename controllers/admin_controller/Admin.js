@@ -295,13 +295,23 @@ module.exports={
         await ctx.render("admin_views/add_rich_text_editor.html");
     },
     articlesList:async(ctx)=>{
-        await ctx.render("admin_views/articles_list.html");
+
+        // let result=await DB.find("articles",{});              //测试输入两个参数的时候数据是否被正确表示。
+        // let result=await DB.find("articles",{},{"title":1});   //测试输入三个参数的时候是否正确表示。
+        
+        //如果url为http://localhost:3001/admin/manager/articlesList?page=1　加载第一页数据。如果没有page这个参数也返回第一页参数。
+        let page=ctx.query.page||1;
+        let pageSize=5;
+        let result=await DB.find("articles",{},{},{    //测试输入四个参数的时候是否正确表示。
+            page:page,
+            pageSize:pageSize
+        })
+        await ctx.render("admin_views/articles_list.html",{
+            list:result,
+        });
     },
     doAddRichText:async(ctx)=>{
         console.log(ctx.request.body);
-        console.log("haahha");
-        
-        
         ctx.body={body:ctx.request.body};
     },
     addArticle:async(ctx)=>{
@@ -311,33 +321,31 @@ module.exports={
         });
     },
     doAddArticle:async(ctx)=>{
-        console.log("hahahah");
+        let pid=ctx.req.body.pid;
+        let catename=ctx.req.body.categoryName ? ctx.req.body.categoryName.trim():"";
+        let title=ctx.req.body.title ? ctx.req.body.title.trim():"";
+        let author=ctx.req.body.author ? ctx.req.body.author.trim():"";
+        let status=ctx.req.body.status;
+        let is_best=ctx.req.body.is_best;
+        let is_hot=ctx.req.body.is_hot;
+        let is_new=ctx.req.body.is_new;
+        let keywords=ctx.req.body.keywords;
+        let description=ctx.req.body.description || '';
+        let content=ctx.req.body.content ||'';
+        let img_url=ctx.req.file? ctx.req.file.path :'';
 
+        //属性的简写
+        let json={
+            pid,catename,title,author,status,is_best,is_hot,is_new,keywords,description,content,img_url
+        }
 
-    let pid=ctx.req.body.pid;
-    let catename=ctx.req.body.categoryName ? ctx.req.body.categoryName.trim():"";
-    let title=ctx.req.body.title ? ctx.req.body.title.trim():"";
-    let author=ctx.req.body.author ? ctx.req.body.author.trim():"";
-    let status=ctx.req.body.status;
-    let is_best=ctx.req.body.is_best;
-    let is_hot=ctx.req.body.is_hot;
-    let is_new=ctx.req.body.is_new;
-    let keywords=ctx.req.body.keywords;
-    let description=ctx.req.body.description || '';
-    let content=ctx.req.body.content ||'';
-    let img_url=ctx.req.file? ctx.req.file.path :'';
+        var result=DB.insert('articles',json);
+        if(result){
+            console.log("hahaha");
+            ctx.redirect("/admin/manager/articlesList");
+        }else{
+            console.log("failed");
+        }
 
-    //属性的简写
-    let json={
-        pid,catename,title,author,status,is_best,is_hot,is_new,keywords,description,content,img_url
-    }
-
-    var result=DB.insert('articles',json);
-    if(result){
-        console.log("hahaha");
-        ctx.redirect("/admin/manager/articlesList");
-    }
-        console.log("failed");
-        
     }
 }
