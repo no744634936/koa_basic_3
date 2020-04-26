@@ -346,11 +346,20 @@ module.exports={
 
         var result=DB.insert('articles',json);
         if(result){
-            console.log("hahaha");
             ctx.redirect("/admin/manager/articlesList");
         }else{
             console.log("failed");
         }
 
+    },
+    editArticle:async(ctx)=>{
+        let id=ctx.query.id;
+        let categories=await DB.find('article_categories',{});
+        let article=await DB.find("articles",{"_id":DB.getObjectId(id)});
+
+        await ctx.render("admin_views/edit_article",{
+            cateList:categories,
+            article:article[0],
+        });
     }
 }

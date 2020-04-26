@@ -93,6 +93,8 @@ router.post("/admin/manager/DoAddArticle",upload.single("img"),adminController.d
 
 
 router.get("/admin/manager/articlesList",adminController.articlesList);
+router.get("/admin/manager/editArticle",adminController.editArticle);
+
 
 router.get("/admin",adminController.index)
 

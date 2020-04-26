@@ -39,6 +39,7 @@ const CONFIG = {
 
 //使用中间件。
 app.use(koaBodyparser());
+app.use(static("."));
 app.use(static(__dirname+'/static_asset'));
 app.use(session(CONFIG, app));
 app.use(jsonp());
