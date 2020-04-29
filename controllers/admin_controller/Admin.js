@@ -316,7 +316,6 @@ module.exports={
         });
     },
     doAddRichText:async(ctx)=>{
-        console.log(ctx.request.body);
         ctx.body={body:ctx.request.body};
     },
     addArticle:async(ctx)=>{
@@ -357,9 +356,51 @@ module.exports={
         let categories=await DB.find('article_categories',{});
         let article=await DB.find("articles",{"_id":DB.getObjectId(id)});
 
+        //获取上一页的url。为doEditArticle方法里的 编辑哪一页的记录，编辑完了之后就跳到那一页做准备。
+        console.log(ctx.request.header.referer);
+        
+
         await ctx.render("admin_views/edit_article",{
             cateList:categories,
             article:article[0],
+            previousURL:ctx.request.header.referer
         });
+    },
+    doEditArticle:async(ctx)=>{
+        let pid=ctx.req.body.pid;
+        let catename=ctx.req.body.categoryName ? ctx.req.body.categoryName.trim():"";
+        let title=ctx.req.body.title ? ctx.req.body.title.trim():"";
+        let author=ctx.req.body.author ? ctx.req.body.author.trim():"";
+        let status=ctx.req.body.status;
+        let is_best=ctx.req.body.is_best;
+        let is_hot=ctx.req.body.is_hot;
+        let is_new=ctx.req.body.is_new;
+        let keywords=ctx.req.body.keywords;
+        let description=ctx.req.body.description || '';
+        let content=ctx.req.body.content ||'';
+        let img_url=ctx.req.file? ctx.req.file.path :'';
+
+        let articleId=ctx.req.body.articleId;
+        let startURL=ctx.req.body.previousURL;
+        let json=null;
+        //注意要判断是否修改了图片。如果img_url不存在，那么就不更新img_url。否者更新。
+        if(img_url==""){
+            json={
+                pid,catename,title,author,status,is_best,is_hot,is_new,keywords,description,content
+            }
+        }else{
+            json={
+                pid,catename,title,author,status,is_best,is_hot,is_new,keywords,description,content,img_url
+            }
+        }
+
+        var result=DB.update('articles',{"_id":DB.getObjectId(articleId)},json);
+        if(result){
+
+            //编辑哪一页的记录，编辑完了之后就跳到那一页。
+            ctx.redirect(startURL);
+        }else{
+            console.log("failed");
+        }
     }
 }

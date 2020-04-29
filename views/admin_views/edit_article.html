@@ -63,7 +63,7 @@
 				<!--表格-->
 
 				<div class="table-responsive">
-					<form action="/admin/manager/DoAddArticle" method="post" class="form-horizontal" enctype="multipart/form-data" style="border:1px solid #eee;">
+					<form action="/admin/manager/doEditArticle" method="post" class="form-horizontal" enctype="multipart/form-data" style="border:1px solid #eee;">
 
 						<ul id="myTab" class="nav nav-tabs" style="height:44px;">
 							<li class="active">
@@ -169,7 +169,9 @@
 						</div>
 
 
-
+                        <input type="hidden" name="articleId" value="{{@article._id}}">
+                        <input type="hidden" name="previousURL" value="{{previousURL}}">
+                        
 						<div class="form-group">
 							<label class="col-sm-2 control-label no-padding-right"></label>
 
@@ -178,8 +180,6 @@
 							</div>
 
 						</div>
-
-
 					</form>
 
 				</div>

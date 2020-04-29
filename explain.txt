@@ -106,7 +106,7 @@ npm install  ko2-ueditor --save;
 
 ---------------------------------
 编辑文章。
-
+http://localhost:3001/admin/manager/editArticle?id=5ea43ba176de3234587df1e2
 
 
 
@@ -178,3 +178,8 @@ article_cover_picture\1587821473540.png
     ue.addListener("ready",function(){
         ue.setContent(`{{@article.content}}`);  //这里必须用es6的模板字符串，并将数据原样输出。
     })
+
+
+
+
+编辑哪一页的记录，编辑完了之后就跳到那一页。

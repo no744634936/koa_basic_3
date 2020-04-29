@@ -90,10 +90,11 @@ router.all('/admin/manager/editor/controller', ueditor(['static_asset', {
 //添加文章内容的路由
 router.get("/admin/manager/addArticle",adminController.addArticle);
 router.post("/admin/manager/DoAddArticle",upload.single("img"),adminController.doAddArticle);
+router.post("/admin/manager/doEditArticle",upload.single("img"),adminController.doEditArticle);
 
 
 router.get("/admin/manager/articlesList",adminController.articlesList);
-router.get("/admin/manager/editArticle",adminController.editArticle);
+router.get("/admin/manager/editArticle",upload.single("img"),adminController.editArticle);
 
 
 router.get("/admin",adminController.index)
