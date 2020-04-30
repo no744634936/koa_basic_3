@@ -1,3 +1,14 @@
-app.js
+1,download node.js
 
-测试 是否能使用。
+2,create koa2_basic folder
+
+
+3,npm init 
+
+4,npm install koa --save
+
+5,create app.js file
+
+6,add code to app.js file
+
+7,run file (node app.js)
