@@ -1,11 +1,1 @@
-
- koa-static 静态资源中间件  静态web服务
-
-1.cnpm install  koa-static --save
-
-2.const static = require('koa-static')
-
-3.配置中间件
-
- app.use(__dirname+static('static'))
-
+阅读01，02，汉字转换成base64编码 这三个文件就可以了。

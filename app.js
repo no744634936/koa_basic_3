@@ -1,43 +1,55 @@
+
 var Koa=require('koa'),
     router = require('koa-router')(),
-    views = require('koa-views'),
-    bodyParser = require('koa-bodyparser'),
-    static = require('koa-static');
+    render = require('koa-art-template'),
+    path=require('path');
 
 var app=new Koa();
-/*应用ejs模板引擎*/
-app.use(views('views',{
-    extension:'ejs'
-}))
 
-//http://localhost:3000/css/basic.css  首先去static目录找 ，如果能找到返回对应的文件，找不到 next()
+//配置 koa-art-template模板引擎
+render(app, {
+    root: path.join(__dirname, 'views'),   // 视图的位置
+    extname: '.html',  // 后缀名
+    debug: process.env.NODE_ENV !== 'production'  //是否开启调试模式
 
-//配置静态web服务的中间件
-//使用了静态资源中间件之后，view里面就可以这样引入 css 或者图片了  <link rel="stylesheet" href="css/basic.css"/>
-//koa静态资源中间件可以配置多个
+});
 
-console.log(__dirname);  //app.js 文件所在目录   c:\Users\zhang\Desktop\koa2_basic_2
-app.use(static(__dirname+'/static'));
-app.use(static(__dirname+'/public'));   
-
-
-
-//配置post bodyparser的中间件
-app.use(bodyParser());
 router.get('/',async (ctx)=>{
-    await  ctx.render('index');
+   //ctx.body="首页"
+    let list={
+
+        name:'张三',
+        h:'<h2>这是一个h2</h2>',
+        num:20,
+        data:['11111111','2222222222','33333333333']
+    }
+
+    await ctx.render('index',{
+        list:list
+
+    });
+})
+//接收post提交的数据
+router.get('/news',async (ctx)=>{
+
+    let app={
+
+        name:'张三11',
+        h:'<h2>这是一个h211</h2>',
+        num:20,
+        data:['11111111','2222222222','33333333333']
+    };
+    await ctx.render('news',{
+        list:app
+    });
 })
 
-//接收post提交的数据
-router.post('/doAdd',async (ctx)=>{
-    console.log(ctx.request.body);
-    ctx.body=ctx.request.body;  //获取表单提交的数据
-})
 
 app.use(router.routes());   /*启动路由*/
 app.use(router.allowedMethods());
-app.listen(3000);
-
+app.listen(3000, () => {
+    console.log('server is running at http://localhost:3000')
+  })
 
 
 
