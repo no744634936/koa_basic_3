@@ -52,15 +52,15 @@ router.get('/',async (ctx)=>{
     ctx.cookies.set('userinfo','zhangsan2222',{
         maxAge:60*1000*60,
 
-       // path:'/news',  /*配置可以访问的页面,在这个page才能看见cookies*/
-       //expires:'2020-04-5',
-       //domain:'.baidu.com'  /*正常情况不要设置 默认就是当前域下面的所有页面都可以方法*/
+       // path:'/news',  /*配置可以访问的页面,在这个page才能看见cookies。默认为'/' 所有页面都可以访问*/
+       //expires:'2020-04-5
+       //domain:'.baidu.com'  /*一般不用设定。正常情况不要设置 默认就是当前域下面的所有页面都可以方法*/
         /*
             a.baidu.com
             b.baidu.com  共享cookie的数据
             express基础教程
         * */
-        httpOnly:false,  //true表示这个cookie只有服务器端可以访问，false表示客户端（js），服务器端都可以访问
+        httpOnly:false,  //true表示这个cookie只有服务器端可以访问，false表示客户端（在html文件里用js访问），服务器端都可以访问
     });
 
 
