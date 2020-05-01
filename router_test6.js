@@ -16,9 +16,16 @@ router.get('/404', async (ctx, next) => {
     ctx.body = '<h1>404 Not Found</h1>'
 })
 
+router.get('/:category/:title', function (ctx, next) {
+    
+    console.log(ctx.params);
+    //localhost:3001/hahah/bababa
+    // => { category: 'hahah', title: 'bababa' }
+  });
+
  // 调用路由中间件
  app.use(router.routes())
 
-app.listen(3000, ()=>{
-  console.log('server is running at http://localhost:3000')
+app.listen(3001, ()=>{
+  console.log('server is running at http://localhost:3001')
 })
