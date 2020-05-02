@@ -105,81 +105,12 @@ npm install  ko2-ueditor --save;
 
 
 ---------------------------------
-编辑文章。
-http://localhost:3001/admin/manager/editArticle?id=5ea43ba176de3234587df1e2
+让文章按创建的时间进行排序。最新的放最前
+http://localhost:3003/admin/manager/articlesList?page=1
+
+改造db.js里的find 方法，添加一个sort条件
+
 
 
 
 ------------------------------------------------------------------------
-显示封面图片的时候出了一个问题。
-显示图片的时候如果这样写
-
-<br/>
-    <img src="{{article.img_url}}" alt="">
-<br/>
-
-测试的时候显示的url就是
-<img src="static_asset\article_cover_picture\1587821473540.png" alt="">
-根本找不到图片。所以一定要写绝对路径。(为什么一定要写绝对路径？？？？)
-
-写绝对路径的时候要这样写，
-
-<br/>
-    <img src="{{__HOST__}}/{{article.img_url}}" alt="">
-<br/>
-
-测试的时候显示的是
-<img src="http://localhost:3001/static_asset\article_cover_picture\1587821473540.png" alt="">
-
-
-但仅仅这样还是不够的
-我一开始设置静态资源的时候。设定的是
-
-app.use(static(__dirname+'/static_asset'));
-
-这句话的意思是去static_asset文件里面才能取出图片。
-但是static_asset文件夹里面没有 static_asset\article_cover_picture 文件夹。所以取不出图片来。
-
-因为静态资源可以可以设置多个。
-我在添加一个
-app.use(static("."));
-
-这样就可以在根目录下取出文件了。
-
-但是这样做有一点不好。就是
-别人也就可以通过 http://localhost:3001/app.js 查看到 我的 源代码。这是很不安全的。
-
-最安全的做法就是。在向数据库放入封面图片的时候将 
-
-static_assetarticle_cover_picture\1587821473540.png 
-
-中的 static_asset 去掉，只放入 
-
-article_cover_picture\1587821473540.png
-
-就可以把url做成，下面这个样子来取图片了，
-
-<img src="http://localhost:3001/article_cover_picture\1587821473540.png" alt="">
-
-也就不用 添加 app.use(static(".")); 程序也就不会变得不安全了。
-
-我因为是写自己的练习项目所以我选择添加 app.use(static("."));
-
-因为这样写得快一点。
-
-
-----------------------------------------------
-向富文本编辑器里添加 数据。
-
-
-	var ue = UE.getEditor('editor');
-
-    //给富文本编辑器提供数据库里取出得内容
-    ue.addListener("ready",function(){
-        ue.setContent(`{{@article.content}}`);  //这里必须用es6的模板字符串，并将数据原样输出。
-    })
-
-
-
-
-编辑哪一页的记录，编辑完了之后就跳到那一页。

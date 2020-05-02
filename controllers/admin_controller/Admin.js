@@ -307,8 +307,11 @@ module.exports={
         
         let result=await DB.find("articles",{},{},{    //测试输入四个参数的时候是否正确表示。
             page:page,
-            pageSize:pageSize
+            pageSize:pageSize,
+            sortCondition:{"created_time":-1},   //按文章的最新顺序排序
         })
+        console.log(result);
+        
         await ctx.render("admin_views/articles_list.html",{
             list:result,
             currentPage:page,

@@ -91,7 +91,7 @@
 										</td>
 
 										<td>
-											{{$value.last_time | dateFormat}}
+											{{$value.created_time | dateFormat}}
 										</td>
 										<td>
 											<input type="text" value="{{$value.score || 0}}" class="score_input" onblur="ajax.changeScore(this,'articles','{{@$value._id}}')"/>
