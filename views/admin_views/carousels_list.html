@@ -1,4 +1,4 @@
-﻿{{include './public/header.html'}}
+{{include './public/header.html'}}
 
 	<body>
 		<div class="navbar navbar-default" id="navbar">
@@ -64,7 +64,11 @@
 								<thead>
 									<tr>
 
-										<th class="left">分类名称</th>
+										<th class="left">标题</th>
+										<th class="left">图片</th>
+                                        <th class="left">URL</th>
+                                        <th class="left">发布时间</th>
+                                        <th class="left">分数</th>
 										<th class="center">状态</th>
 										<th width="100px;" class="center">操作</th>
 									</tr>
@@ -78,6 +82,19 @@
 
 										<td >
 											{{$value.title}}
+                                        </td>
+										<td >
+                                            <!-- 这里必须要用{{__HOST__}} 因为仅carousels\1588410358742.png 时找不到图片的 -->
+											<img src="{{__HOST__}}/{{$value.picture}}" alt="" style="width:80px;height:80px">
+                                        </td>
+										<td >
+											{{$value.url}}
+                                        </td>
+										<td>
+											{{$value.created_at | dateFormat}}
+										</td>
+                                        <td>
+											<input type="text" value="{{$value.score || 0}}" class="score_input" onblur="ajax.changeScore(this,'articles','{{@$value._id}}')"/>
 										</td>
 
 										<td class="hidden-480">
@@ -156,7 +173,8 @@
 								{{/each}}
 
 								</tbody>
-							</table>
+                            </table>
+                            <div id="pagination" class="pagination"></div>
 						</div>
 
 					</div>
@@ -202,7 +220,28 @@
 					return 'left';
 				}
 			})
-		</script>
+        </script>
+    <!-- 导入的时候一定要放到jp后面 -->
+    <script src="/my_tools/jqPaginator.js"></script>
+        <script>
+            console.log({{totalPages}});
+            
+            $('#pagination').jqPaginator({
+                totalPages: {{totalPages}},
+                //可以看见的是5页
+                visiblePages: 5,
+                //当前是第几页就选中第几页
+                currentPage: {{currentPage}},
+                onPageChange: function (num, type) {
+                    //num是点击的页码数
+                    //type有change跟init两种。init是第一次显示页码的时候。change是点击页码的时候，
+                    console.log(num,type);     
+                    if(type=="change"){
+                        location.href="/admin/manager/carouselsList?page="+num
+                    }
+                }
+            });
+        </script>
 	
 </body>
 </html>

@@ -457,5 +457,23 @@ module.exports={
         }
 
 
+    },
+    carouselsList:async(ctx)=>{
+        let page=ctx.query.page||1;
+        let pageSize=5;
+        let count=await DB.count("carousels",{})
+        let totalPages=Math.ceil(count/pageSize);
+        
+        
+        let result=await DB.find("carousels",{},{},{
+            page:page,
+            pageSize:pageSize,
+            sortCondition:{"created_time":-1},   
+        })
+        await ctx.render("admin_views/carousels_list.html",{
+            list:result,
+            currentPage:page,
+            totalPages:totalPages
+        });
     }
 }

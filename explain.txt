@@ -105,12 +105,9 @@ npm install  ko2-ueditor --save;
 
 
 ---------------------------------
-让文章按创建的时间进行排序。最新的放最前
-http://localhost:3003/admin/manager/articlesList?page=1
+制作轮播图列表与分页
 
-改造db.js里的find 方法，添加一个sort条件
-
-
+http://localhost:3001/admin/manager/carouselsList
 
 
 ------------------------------------------------------------------------
