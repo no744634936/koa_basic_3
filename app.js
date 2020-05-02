@@ -50,6 +50,6 @@ app.use(jsonp());
 //路由写在所有中间件的最下面。
 app.use(admin); 
 app.use(user); 
-app.listen(3001, () => {
-  console.log('server is running at http://localhost:3000')
+app.listen(3002, () => {
+  console.log('server is running at http://localhost:3002')
 })

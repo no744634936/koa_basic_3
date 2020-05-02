@@ -72,7 +72,7 @@
 										</th>
 										<th width="60px;" class="center">排序</th>
 										<th width="60px;" class="center">热门</th>
-										<th width="60px;" class="center">推荐</th>
+										<th width="60px;" class="center">分数</th>
 										<th width="60px;" class="center">状态</th>
 										<th width="100px;" class="center">操作</th>
 									</tr>
@@ -94,7 +94,7 @@
 											{{$value.last_time | dateFormat}}
 										</td>
 										<td>
-											<input type="text" value="{{$value.sort || 0}}" class="sort_input" onblur="app.changeSort(this,'article','{{@$value._id}}')"/>
+											<input type="text" value="{{$value.score || 0}}" class="score_input" onblur="ajax.changeScore(this,'articles','{{@$value._id}}')"/>
 										</td>
 
 										<td>
@@ -207,7 +207,7 @@
 			}
 		})
 	</script>
-	
+	<script src="/my_tools/ajax_request.js"></script>
 </body>
 </html>
 

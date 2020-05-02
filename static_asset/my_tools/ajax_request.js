@@ -6,7 +6,6 @@ formatParams=(params)=>{
     return "?"+array.join("&");
 }
 
-
 let ajax={
 
     toggle:(elem,table_name,id)=>{
@@ -34,7 +33,6 @@ let ajax={
                 // console.log(request.responseText);
                 let data=JSON.parse(request.responseText);
                 if(data.success){
-                    
                     elem.src.includes("yes") ? elem.src="/admin/images/no.gif" : elem.src="/admin/images/yes.gif";
                 }else{
                     console.log("can not find data");
@@ -44,7 +42,27 @@ let ajax={
                 
             }
         })
-    }
+    },
+
+
+    //分数栏哪里输入数据之后立马改变数值。
+    changeScore:(elem,table_name,id)=>{
+        let request=new XMLHttpRequest();
+
+        //将要传递的参数跟url连接起来
+        let params={
+            table:table_name,
+            id:id,
+            newScore:elem.value
+        }
+
+        let endpoint="/admin/manager/changeScore";
+        let url = endpoint + formatParams(params); 
+        console.log(url);
+        request.open("GET",url);
+        request.send();
+    },
+
 }
 
 

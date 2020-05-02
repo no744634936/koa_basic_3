@@ -402,5 +402,22 @@ module.exports={
         }else{
             console.log("failed");
         }
+    },
+    changeScore:async(ctx)=>{
+        console.log(ctx.query);
+        let table=decodeURIComponent(ctx.query.table);
+        let id=decodeURIComponent(ctx.query.id);
+        let newScore=decodeURIComponent(ctx.query.newScore);
+        let data=await DB.find(table,{"_id":DB.getObjectId(id)});
+        let json={ score:newScore };
+
+        if(data.length>0){
+            let updateResult=await DB.update(table,{"_id":DB.getObjectId(id)},json);
+            if(updateResult){
+                ctx.body={"message":"更新成功","success":true}
+            }else{
+                ctx.body={"message":"更新失败","success":false}
+            }
+        }
     }
 }
