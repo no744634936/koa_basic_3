@@ -18,6 +18,20 @@ let storage=multer.diskStorage({
 //加载配置
 let upload=multer({storage:storage})
 
+let storage2=multer.diskStorage({
+    //文件保存路径 
+    destination:function(req,file,cb){ 
+        cb(null,'static_asset/carousels') //注意路径必须存在,也就是说
+    }, 
+    //修改文件名称 
+    filename:function(req,file,cb){
+         let fileFormat=(file.originalname).split("."); 
+         cb(null,Date.now()+"."+fileFormat[fileFormat.length-1]); 
+    } 
+})
+//加载配置
+let upload2=multer({storage:storage2})
+
 
 router.use(async (ctx,next)=>{
     console.log("admin");
@@ -96,6 +110,11 @@ router.post("/admin/manager/doEditArticle",upload.single("img"),adminController.
 router.get("/admin/manager/articlesList",adminController.articlesList);
 router.get("/admin/manager/editArticle",upload.single("img"),adminController.editArticle);
 router.get("/admin/manager/changeScore",adminController.changeScore);
+
+//轮播图的路由
+
+router.get("/admin/manager/carouselsAdd",adminController.carouselsAdd);
+router.post("/admin/manager/doCarouselsAdd",upload2.single('picture'),adminController.doCarouselsAdd);
 
 router.get("/admin",adminController.index)
 

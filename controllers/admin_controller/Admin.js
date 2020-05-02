@@ -422,5 +422,40 @@ module.exports={
                 ctx.body={"message":"更新失败","success":false}
             }
         }
+    },
+
+    //轮播图的路由
+    carouselsAdd:async(ctx)=>{
+        await ctx.render("admin_views/add_carousels.html");
+    },
+    doCarouselsAdd:async(ctx)=>{
+
+        // let fileName=ctx.req.file ? ctx.req.file.filename : "";
+        // ctx.body={ 
+        //     filename:fileName,//返回文件名 
+        //     body:ctx.req.body 
+        // }
+        
+        //注意ctx.req 跟ctx.request 是不一样的.跟图片一起穿过来的字符有取出来时要用ctx.req.body.title
+        //而不是ctx.request.body.title
+        //上传图片的路径为  ctx.req.file.path   ——>static_asset\carousels\1588409974795.png
+        //去掉static_asset\
+        
+        let json={
+            "picture":ctx.req.file ? ctx.req.file.path.substr(13) : "",
+            "title":ctx.req.body.title,
+            "url":ctx.req.body.url,
+            "score":ctx.req.body.score,
+            "status":ctx.req.body.status,
+            "created_at":new Date(),
+        }
+        let addResult=await DB.insert("carousels",json);
+        if(addResult){
+            ctx.body="<script>alert('添加成功');location.href='/admin/manager/carouselsList'</script>";
+        }else{
+            ctx.body="<script>alert('添加失败，请重新添加');location.href='/admin/manager/carouselsAdd'</script>";
+        }
+
+
     }
 }
