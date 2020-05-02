@@ -116,6 +116,8 @@ router.get("/admin/manager/changeScore",adminController.changeScore);
 router.get("/admin/manager/carouselsAdd",adminController.carouselsAdd);
 router.post("/admin/manager/doCarouselsAdd",upload2.single('picture'),adminController.doCarouselsAdd);
 router.get("/admin/manager/carouselsList",adminController.carouselsList);
+router.get("/admin/manager/editCarousels",adminController.editCarousels);
+router.post("/admin/manager/doCarouselsEdit",upload2.single('picture'),adminController.doCarouselsEdit);
 
 router.get("/admin",adminController.index)
 

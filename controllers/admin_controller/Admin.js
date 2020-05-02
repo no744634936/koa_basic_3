@@ -134,10 +134,7 @@ module.exports={
             let password=ctx.request.body.password;
             let rpassword=ctx.request.body.rpassword;
             let id=ctx.request.body.id;
-            console.log(password);
-            console.log(id);
-            
-            
+        
             //密码不为空
             if(password!=""){
                 if(password!=rpassword){
@@ -475,5 +472,35 @@ module.exports={
             currentPage:page,
             totalPages:totalPages
         });
+    },
+    editCarousels:async(ctx)=>{
+        let id=ctx.query.id;
+        let result=await DB.find("carousels",{"_id":DB.getObjectId(id)});
+        console.log(result[0]);
+        
+        await ctx.render("admin_views/edit_carousels.html",{
+            item:result[0],
+        });
+    },
+    doCarouselsEdit:async(ctx)=>{
+        let id=ctx.query.id;
+        console.log(id);
+        
+        let json={
+            "picture":ctx.req.file ? ctx.req.file.path.substr(13) : "",
+            "title":ctx.req.body.title,
+            "url":ctx.req.body.url,
+            "score":ctx.req.body.score,
+            "status":ctx.req.body.status,
+        }
+        console.log(json)
+        var result=await DB.update('carousels',{"_id":DB.getObjectId(id)},json);
+        console.log(result);
+        
+        if(result){
+            ctx.body="<script>alert('添加成功');location.href='/admin/manager/carouselsList'</script>";
+        }else{
+            ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/doCarouselsEdit?id=${id}'</script>`;
+        }
     }
 }

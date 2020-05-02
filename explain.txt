@@ -105,9 +105,8 @@ npm install  ko2-ueditor --save;
 
 
 ---------------------------------
-制作轮播图列表与分页
-
-http://localhost:3001/admin/manager/carouselsList
+制作轮播图的编辑功能
+http://localhost:3001/admin/manager/editCarousels?id=5ead37f62fb6842a18aefdb4
 
 
 ------------------------------------------------------------------------
