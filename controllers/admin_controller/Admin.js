@@ -484,15 +484,25 @@ module.exports={
     },
     doCarouselsEdit:async(ctx)=>{
         let id=ctx.query.id;
-        console.log(id);
-        
-        let json={
-            "picture":ctx.req.file ? ctx.req.file.path.substr(13) : "",
-            "title":ctx.req.body.title,
-            "url":ctx.req.body.url,
-            "score":ctx.req.body.score,
-            "status":ctx.req.body.status,
+        let json=null;
+        let picture=ctx.req.file ? ctx.req.file.path.substr(13) : "";
+        if(picture==""){
+            json={
+                "title":ctx.req.body.title,
+                "url":ctx.req.body.url,
+                "score":ctx.req.body.score,
+                "status":ctx.req.body.status,
+            }
+        }else{
+            json={
+                "picture":ctx.req.file.path.substr(13),
+                "title":ctx.req.body.title,
+                "url":ctx.req.body.url,
+                "score":ctx.req.body.score,
+                "status":ctx.req.body.status,
+            }
         }
+
         console.log(json)
         var result=await DB.update('carousels',{"_id":DB.getObjectId(id)},json);
         console.log(result);
