@@ -105,10 +105,21 @@ npm install  ko2-ueditor --save;
 
 
 ---------------------------------
-导航栏的增删改
+系统设定功能
 
-
-
-写个导航栏的的几个关键功能删除功能跟状态改变功能没有写。
-
+因为整个数据表里只有一条数据，且只能修改不能删除，所以要提前在数据库里放入数据。然后取出
 ------------------------------------------------------------------------
+{
+    "site_title": "test",
+    "site_log": "test",
+    "site_keywords": "product,computer",
+    "site_description": "test test",
+    "site_icp": "123456789",
+    "site_qq": "744634936",
+    "site_tel": "090-8256-7624",
+    "site_address": "hahahhahahahaahha",
+    "site_status":1,
+    "created_at": {
+        "$date": "2020-05-03T03:17:10.333Z"
+    }
+}

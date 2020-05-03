@@ -106,6 +106,10 @@ router.get("/admin/manager/editNav",adminController.editNav);
 router.post("/admin/manager/doNavEdit",adminController.doNavEdit);
 
 
+//系统设定的路由
+
+router.get("/admin/manager/setting",adminController.setting);
+router.post("/admin/manager/doSystemSetting",pictureTools.logoMulter().single('site_logo'),adminController.doSystemSetting);
 
 
 router.get("/admin",adminController.index)

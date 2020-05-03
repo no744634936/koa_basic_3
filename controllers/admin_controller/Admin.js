@@ -651,5 +651,55 @@ module.exports={
             ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/editNav?id=${id}'</script>`;
         }
         
+    },
+    //系统设定的路由
+    setting:async(ctx)=>{
+        //因为整个数据表里只有一条数据，且只能修改不能删除，所以要提前在数据库里放入数据。然后取出
+        let id="5eaea28930e2b04fc4682385";
+        let result=await DB.find("siteSetting",{"_id":DB.getObjectId(id)});
+        await ctx.render("admin_views/setting.html",{
+            list:result[0]
+        });
+    },
+    doSystemSetting:async(ctx)=>{
+        // let fileName=ctx.req.file ? ctx.req.file.filename : "";
+        // ctx.body={ 
+        //     filename:fileName,//返回文件名 
+        //     body:ctx.req.body 
+        // }
+        let id=ctx.query.id;
+        let json=null;
+        let picture=ctx.req.file ? ctx.req.file.path.substr(13) : "";
+        if(picture==""){
+            json={
+                "site_title": ctx.req.body.site_title,
+                "site_keywords": ctx.req.body.site_keywords,
+                "site_description": ctx.req.body.site_description,
+                "site_icp": ctx.req.body.site_icp,
+                "site_qq": ctx.req.body.site_qq,
+                "site_tel": ctx.req.body.site_tel,
+                "site_address": ctx.req.body.site_address,
+                "site_status":ctx.req.body.site_status,
+            }
+        }else{
+            json={
+                "site_logo": ctx.req.file.path.substr(13),
+                "site_title": ctx.req.body.site_title,
+                "site_keywords": ctx.req.body.site_keywords,
+                "site_description": ctx.req.body.site_description,
+                "site_icp": ctx.req.body.site_icp,
+                "site_qq": ctx.req.body.site_qq,
+                "site_tel": ctx.req.body.site_tel,
+                "site_address": ctx.req.body.site_address,
+                "site_status":ctx.req.body.site_status,
+            }
+        }
+        var result=await DB.update('siteSetting',{"_id":DB.getObjectId(id)},json);
+        
+        if(result){
+            ctx.body="<script>alert('添加成功');location.href='/admin/manager/setting'</script>";
+        }else{
+            ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/setting'</script>`;
+        }
     }
 }
