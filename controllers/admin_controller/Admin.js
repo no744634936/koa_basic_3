@@ -503,14 +503,88 @@ module.exports={
             }
         }
 
-        console.log(json)
         var result=await DB.update('carousels',{"_id":DB.getObjectId(id)},json);
-        console.log(result);
         
         if(result){
             ctx.body="<script>alert('添加成功');location.href='/admin/manager/carouselsList'</script>";
         }else{
-            ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/doCarouselsEdit?id=${id}'</script>`;
+            ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/editCarousels?id=${id}'</script>`;
+        }
+    },
+    linksAdd:async(ctx)=>{
+        await ctx.render("admin_views/add_links.html");
+    },
+    doLinksAdd:async(ctx)=>{
+
+        let json={
+            "picture":ctx.req.file ? ctx.req.file.path.substr(13) : "",
+            "name":ctx.req.body.name,
+            "url":ctx.req.body.url,
+            "score":ctx.req.body.score,
+            "status":ctx.req.body.status,
+            "created_at":new Date(),
+        }
+        let addResult=await DB.insert("links",json);
+        if(addResult){
+            ctx.body="<script>alert('添加成功');location.href='/admin/manager/linksList'</script>";
+        }else{
+            ctx.body="<script>alert('添加失败，请重新添加');location.href='/admin/manager/carouselsAdd'</script>";
+        }
+    },
+    linksList:async(ctx)=>{
+        let page=ctx.query.page||1;
+        let pageSize=5;
+        let count=await DB.count("carousels",{})
+        let totalPages=Math.ceil(count/pageSize);
+        
+        
+        let result=await DB.find("links",{},{},{
+            page:page,
+            pageSize:pageSize,
+            sortCondition:{"created_time":-1},   
+        })
+        await ctx.render("admin_views/links_list.html",{
+            list:result,
+            currentPage:page,
+            totalPages:totalPages
+        });
+    },
+    editLinks:async(ctx)=>{
+        let id=ctx.query.id;
+        let result=await DB.find("links",{"_id":DB.getObjectId(id)});
+        console.log(result[0]);
+        
+        await ctx.render("admin_views/edit_links.html",{
+            item:result[0],
+        });
+    },
+    doLinksEdit:async(ctx)=>{
+        let id=ctx.query.id;
+        let json=null;
+        let picture=ctx.req.file ? ctx.req.file.path.substr(13) : "";
+        if(picture==""){
+            json={
+                "name":ctx.req.body.name,
+                "url":ctx.req.body.url,
+                "score":ctx.req.body.score,
+                "status":ctx.req.body.status,
+            }
+        }else{
+            json={
+                "picture":ctx.req.file.path.substr(13),
+                "name":ctx.req.body.name,
+                "url":ctx.req.body.url,
+                "score":ctx.req.body.score,
+                "status":ctx.req.body.status,
+            }
+        }
+
+        var result=await DB.update('links',{"_id":DB.getObjectId(id)},json);
+        
+        if(result){
+            ctx.body="<script>alert('添加成功');location.href='/admin/manager/linksList'</script>";
+        }else{
+            ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/editLinks?id=${id}'</script>`;
         }
     }
 }

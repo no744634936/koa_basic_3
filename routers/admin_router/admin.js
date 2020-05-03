@@ -4,9 +4,6 @@ let router=require("koa-router")()
 let ueditor = require('koa2-ueditor')
 let pictureTools=require("../separated_middleware/picture_tool.js")
 
-console.log(pictureTools.test);
-console.log(pictureTools.articleMulter);
-
 
 router.use(async (ctx,next)=>{
     console.log("admin");
@@ -93,6 +90,13 @@ router.post("/admin/manager/doCarouselsAdd",pictureTools.carouselsMulter().singl
 router.get("/admin/manager/carouselsList",adminController.carouselsList);
 router.get("/admin/manager/editCarousels",adminController.editCarousels);
 router.post("/admin/manager/doCarouselsEdit",pictureTools.carouselsMulter().single('picture'),adminController.doCarouselsEdit);
+
+//友情链接的路由、
+router.get("/admin/manager/linksAdd",adminController.linksAdd);
+router.post("/admin/manager/doLinksAdd",pictureTools.linksMulter().single('picture'),adminController.doLinksAdd);
+router.get("/admin/manager/linksList",adminController.linksList);
+router.get("/admin/manager/editLinks",adminController.editLinks);
+router.post("/admin/manager/doLinksEdit",pictureTools.linksMulter().single('picture'),adminController.doLinksEdit);
 
 router.get("/admin",adminController.index)
 
