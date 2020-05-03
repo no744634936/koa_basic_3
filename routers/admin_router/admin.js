@@ -8,12 +8,14 @@ let router=require("koa-router")()
 
 router.use(async (ctx,next)=>{
     console.log("admin");
+
     if(ctx.session.adminInfo){
+        //如果有session数据，说明已登录，可以通过输入的路由访问数
         await next();
     }else{
-        
+        //如过没有session
+        //只允许访问 "/admin/login"  和 "/admin/doLogin" 两个路由，输入任何其他路由都会跳到login画面
         if((ctx.request.url=="/admin/login")||(ctx.request.url=="/admin/doLogin")){
-            //注意这里是 admin下面的login 里的doLogin ctx.url=="/admin/login/doLogin"
             await next();
         }else{
             ctx.redirect("/admin/login");
