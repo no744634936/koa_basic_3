@@ -105,10 +105,11 @@ npm install  ko2-ueditor --save;
 
 
 ---------------------------------
-制作轮播图的编辑功能
-http://localhost:3001/admin/manager/editCarousels?id=5ead37f62fb6842a18aefdb4
+admin 路由里面有两个multer中间件，有必要将值分离出来，万一其他路由也需要用到
+导入即可。将图片上传的代码封装在 separated_middleware文件夹的picture_tool.js
 
 
+使用的时候一定要这样用 pictureTools.articleMulter().single("img")
+articleMulter() 必须是带括号的。
 
-删除功能更能，编辑哪一页，编辑完后返回哪一页的功能
 ------------------------------------------------------------------------

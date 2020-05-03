@@ -1,36 +1,11 @@
 
 let adminController=require("../../controllers/admin_controller/Admin.js");
 let router=require("koa-router")()
-const multer=require('koa-multer');
-const ueditor = require('koa2-ueditor')
+let ueditor = require('koa2-ueditor')
+let pictureTools=require("../separated_middleware/picture_tool.js")
 
-let storage=multer.diskStorage({
-    //文件保存路径 
-    destination:function(req,file,cb){ 
-        cb(null,'static_asset/article_cover_picture') //注意路径必须存在,也就是说
-    }, 
-    //修改文件名称 
-    filename:function(req,file,cb){
-         let fileFormat=(file.originalname).split("."); 
-         cb(null,Date.now()+"."+fileFormat[fileFormat.length-1]); 
-    } 
-})
-//加载配置
-let upload=multer({storage:storage})
-
-let storage2=multer.diskStorage({
-    //文件保存路径 
-    destination:function(req,file,cb){ 
-        cb(null,'static_asset/carousels') //注意路径必须存在,也就是说
-    }, 
-    //修改文件名称 
-    filename:function(req,file,cb){
-         let fileFormat=(file.originalname).split("."); 
-         cb(null,Date.now()+"."+fileFormat[fileFormat.length-1]); 
-    } 
-})
-//加载配置
-let upload2=multer({storage:storage2})
+console.log(pictureTools.test);
+console.log(pictureTools.articleMulter);
 
 
 router.use(async (ctx,next)=>{
@@ -83,7 +58,7 @@ router.get("/admin/manager/deleteCategory",adminController.deleteCategory);
 
 router.get("/admin/manager/addPicture",adminController.addPicture)
 //single里面的名字是，view里面图片输入框的name的值。
-router.post("/admin/manager/doAddPicture",upload.single('picture'),adminController.doAddPicture);
+router.post("/admin/manager/doAddPicture",pictureTools.articleMulter().single('picture'),adminController.doAddPicture);
 
 //测试富文本编辑器功能
 router.get("/admin/manager/addRichText",adminController.addRichText);
@@ -103,21 +78,21 @@ router.all('/admin/manager/editor/controller', ueditor(['static_asset', {
 
 //添加文章内容的路由
 router.get("/admin/manager/addArticle",adminController.addArticle);
-router.post("/admin/manager/DoAddArticle",upload.single("img"),adminController.doAddArticle);
-router.post("/admin/manager/doEditArticle",upload.single("img"),adminController.doEditArticle);
+router.post("/admin/manager/DoAddArticle",pictureTools.articleMulter().single("img"),adminController.doAddArticle);
+router.post("/admin/manager/doEditArticle",pictureTools.articleMulter().single("img"),adminController.doEditArticle);
 
 
 router.get("/admin/manager/articlesList",adminController.articlesList);
-router.get("/admin/manager/editArticle",upload.single("img"),adminController.editArticle);
+router.get("/admin/manager/editArticle",pictureTools.articleMulter().single("img"),adminController.editArticle);
 router.get("/admin/manager/changeScore",adminController.changeScore);
 
 //轮播图的路由
 
 router.get("/admin/manager/carouselsAdd",adminController.carouselsAdd);
-router.post("/admin/manager/doCarouselsAdd",upload2.single('picture'),adminController.doCarouselsAdd);
+router.post("/admin/manager/doCarouselsAdd",pictureTools.carouselsMulter().single('picture'),adminController.doCarouselsAdd);
 router.get("/admin/manager/carouselsList",adminController.carouselsList);
 router.get("/admin/manager/editCarousels",adminController.editCarousels);
-router.post("/admin/manager/doCarouselsEdit",upload2.single('picture'),adminController.doCarouselsEdit);
+router.post("/admin/manager/doCarouselsEdit",pictureTools.carouselsMulter().single('picture'),adminController.doCarouselsEdit);
 
 router.get("/admin",adminController.index)
 
