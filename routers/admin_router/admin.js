@@ -9,7 +9,7 @@ let router=require("koa-router")()
 router.use(async (ctx,next)=>{
     console.log("admin");
 
-    //定义一个全局变量G，然后再每一个页面(view)里都可以使用这个userInfo里面的信息了
+    //定义一个全局变量G，然后再每一个页面(view)或者控制器（controller）里都可以使用这个userInfo里面的信息了
     ctx.state.G={
         adminInfo:ctx.session.adminInfo,
     }

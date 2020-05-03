@@ -78,7 +78,7 @@ npm install md5 --save
 --------------------------------------------------------------
 logout 功能，
 
-//定义一个全局变量G，然后再每一个页面(view)里都可以使用这个userInfo里面的信息了
+//定义一个全局变量G，然后再每一个页面(view)或者控制器（controller）里都可以使用这个userInfo里面的信息了
 // 为什么只能是admin 里面的view可以使用。user里面的view就不可以使用这个G呢？
 ctx.state.G={
     adminInfo:ctx.session.adminInfo,
