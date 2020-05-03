@@ -98,6 +98,16 @@ router.get("/admin/manager/linksList",adminController.linksList);
 router.get("/admin/manager/editLinks",adminController.editLinks);
 router.post("/admin/manager/doLinksEdit",pictureTools.linksMulter().single('picture'),adminController.doLinksEdit);
 
+//导航项目的路由
+router.get("/admin/manager/navAdd",adminController.navAdd);
+router.post("/admin/manager/doNavAdd",adminController.doNavAdd);
+router.get("/admin/manager/navList",adminController.navList);
+router.get("/admin/manager/editNav",adminController.editNav);
+router.post("/admin/manager/doNavEdit",adminController.doNavEdit);
+
+
+
+
 router.get("/admin",adminController.index)
 
 module.exports=router.routes();  //启动路由的命令

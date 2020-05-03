@@ -586,5 +586,70 @@ module.exports={
         }else{
             ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/editLinks?id=${id}'</script>`;
         }
+    },
+    //导航栏的路由
+    navAdd:async(ctx)=>{
+        await ctx.render("admin_views/add_nav.html");
+    },
+    doNavAdd:async(ctx)=>{
+        //注意这里不能使用ctx.req.body.title。只能使用ctx.request.body.title
+
+        let json={
+            title: ctx.request.body.title,
+            url: ctx.request.body.url,
+            score: ctx.request.body.score,
+            status: ctx.request.body.status,
+            created_at:new Date(),
+        }
+        let addResult=await DB.insert("navs",json);
+        if(addResult){
+            ctx.body="<script>alert('添加成功');location.href='/admin/manager/navList'</script>";
+        }else{
+            ctx.body="<script>alert('添加失败，请重新添加');location.href='/admin/manager/navAdd'</script>";
+        }
+    },
+    navList:async(ctx)=>{
+        let page=ctx.query.page||1;
+        let pageSize=5;
+        let count=await DB.count("carousels",{})
+        let totalPages=Math.ceil(count/pageSize);
+        
+        
+        let result=await DB.find("navs",{},{},{
+            page:page,
+            pageSize:pageSize,
+            sortCondition:{"created_time":-1},   
+        })
+        await ctx.render("admin_views/navs_list.html",{
+            list:result,
+            currentPage:page,
+            totalPages:totalPages
+        });
+    },
+    editNav:async(ctx)=>{
+        let id=ctx.query.id;
+        let result=await DB.find("navs",{"_id":DB.getObjectId(id)});
+        console.log(result[0]);
+        
+        await ctx.render("admin_views/edit_nav.html",{
+            item:result[0],
+        });
+    },
+    doNavEdit:async(ctx)=>{
+        let id=ctx.query.id;
+        let json={
+            title: ctx.request.body.title,
+            url: ctx.request.body.url,
+            score: ctx.request.body.score,
+            status: ctx.request.body.status,
+        }
+        var result=await DB.update('navs',{"_id":DB.getObjectId(id)},json);
+        
+        if(result){
+            ctx.body="<script>alert('添加成功');location.href='/admin/manager/navList'</script>";
+        }else{
+            ctx.body=`<script>alert('添加失败，请重新添加');location.href='/admin/manager/editNav?id=${id}'</script>`;
+        }
+        
     }
 }
