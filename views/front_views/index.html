@@ -18,13 +18,11 @@
         	        	
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
-      	
-      	<img src="front/images/banner5.jpg" alt="" />
-      </div>
-      <div class="swiper-slide">
-      	<img src="front/images/banner2.jpg" alt="" />
-      </div>
+        {{each carousels}}
+            <div class="swiper-slide">
+                <img src="{{$value.picture}}" alt="{{$value.title}}">
+            </div>
+        {{/each}}
      
     </div>
      <div class="swiper-pagination"></div>

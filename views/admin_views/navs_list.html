@@ -169,7 +169,6 @@
 
 								</tbody>
                             </table>
-                            <div id="pagination" class="pagination"></div>
 						</div>
 
 					</div>
@@ -215,27 +214,6 @@
 					return 'left';
 				}
 			})
-        </script>
-    <!-- 导入的时候一定要放到jp后面 -->
-    <script src="/my_tools/jqPaginator.js"></script>
-        <script>
-            console.log({{totalPages}});
-            
-            $('#pagination').jqPaginator({
-                totalPages: {{totalPages}},
-                //可以看见的是5页
-                visiblePages: 5,
-                //当前是第几页就选中第几页
-                currentPage: {{currentPage}},
-                onPageChange: function (num, type) {
-                    //num是点击的页码数
-                    //type有change跟init两种。init是第一次显示页码的时候。change是点击页码的时候，
-                    console.log(num,type);     
-                    if(type=="change"){
-                        location.href="/admin/manager/carouselsList?page="+num
-                    }
-                }
-            });
         </script>
 	
 </body>

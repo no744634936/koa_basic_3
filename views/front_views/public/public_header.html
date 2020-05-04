@@ -7,27 +7,9 @@
         </div>
         <div class="nav">
             <ul class="clear">
-                <li>
-                    <a href="index.html" class="active">网站首页</a>
-                </li>
-                
-                <li>
-                    <a href="service.html">开发服务</a>
-                </li>
-            
-                
-                <li>
-                    <a href="case.html">成功案例</a>
-                </li>
-                <li>
-                    <a href="news.html">新闻资讯</a>
-                </li>
-                <li>
-                    <a href="about.html">关于我们</a>
-                </li>
-                <li>
-                    <a href="connect.html">联系我们</a>
-                </li>
+            {{each navs}}
+                <li><a href="{{$value.url}}" {{if pathName==$value.url}} class="active" {{/if}} >{{$value.title}}</a></li>
+            {{/each}}
             </ul>
         </div>
     </div>

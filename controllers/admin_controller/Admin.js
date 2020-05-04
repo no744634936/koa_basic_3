@@ -609,21 +609,11 @@ module.exports={
         }
     },
     navList:async(ctx)=>{
-        let page=ctx.query.page||1;
-        let pageSize=5;
-        let count=await DB.count("carousels",{})
-        let totalPages=Math.ceil(count/pageSize);
-        
-        
-        let result=await DB.find("navs",{},{},{
-            page:page,
-            pageSize:pageSize,
-            sortCondition:{"created_time":-1},   
-        })
+
+        let result=await DB.find("navs",{});
+
         await ctx.render("admin_views/navs_list.html",{
             list:result,
-            currentPage:page,
-            totalPages:totalPages
         });
     },
     editNav:async(ctx)=>{
