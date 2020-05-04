@@ -2,6 +2,7 @@ const Koa = require('koa');
 const path=require('path');
 const render = require('koa-art-template');
 const admin=require("./routers/admin_router/admin.js");
+const front=require("./routers/front_router/front.js");
 const user=require("./routers/user_router/user.js");
 const static=require("koa-static");
 const session = require('koa-session');
@@ -49,6 +50,7 @@ app.use(jsonp());
 
 //路由写在所有中间件的最下面。
 app.use(admin); 
+app.use(front); 
 app.use(user); 
 app.listen(3001, () => {
   console.log('server is running at http://localhost:3001')

@@ -105,21 +105,29 @@ npm install  ko2-ueditor --save;
 
 
 ---------------------------------
-系统设定功能
+添加前端的各种html文件
 
-因为整个数据表里只有一条数据，且只能修改不能删除，所以要提前在数据库里放入数据。然后取出
-------------------------------------------------------------------------
-{
-    "site_title": "test",
-    "site_log": "test",
-    "site_keywords": "product,computer",
-    "site_description": "test test",
-    "site_icp": "123456789",
-    "site_qq": "744634936",
-    "site_tel": "090-8256-7624",
-    "site_address": "hahahhahahahaahha",
-    "site_status":1,
-    "created_at": {
-        "$date": "2020-05-03T03:17:10.333Z"
-    }
-}
+将各种html文件放入项目里面，然后修改html文件里的各种链接，然后将导航栏的部分 给分离出来。
+
+-----------------------------
+
+图片放在staticc_asset/front/images 文件夹里了。
+又因为我在app.js文件里面已经配置了所有css，js 与 图片都去static_asset文件夹里面去找。
+所以在view里面添加图片的时候写相对路径就可以了。就像这样
+
+<img src="front/images/banner5.jpg" alt="" />
+
+-----------------------------
+问题:
+
+同样是导入使用导入的方法，为什么
+
+router.post("/admin/manager/doLinksAdd",pictureTools.linksMulter().single('picture'),adminController.doLinksAdd);
+
+中需要用linksMulter() 必须带括号。才能执行方法。
+
+然而
+
+router.get("/",frontController.showTopPage);
+
+中showTopPage为什么不需要带括号就能执行？？？？
