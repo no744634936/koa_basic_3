@@ -368,7 +368,7 @@ module.exports={
     },
     doEditArticle:async(ctx)=>{
         let pid=ctx.req.body.pid;
-        let catename=ctx.req.body.categoryName ? ctx.req.body.categoryName.trim():"";
+        let catename=ctx.req.body.categoryName.includes("---") ? ctx.req.body.categoryName.trim().substr(3):ctx.req.body.categoryName.trim();
         let title=ctx.req.body.title ? ctx.req.body.title.trim():"";
         let author=ctx.req.body.author ? ctx.req.body.author.trim():"";
         let status=ctx.req.body.status;
