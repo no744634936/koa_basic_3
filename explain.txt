@@ -1,1 +1,2 @@
-从1到3看完即可。
+1、下载mongodb community server (自带可视化工具mongodb compass community)
+2, 连接数据库非常耗时间。所以js文件里的方法需要优化。
