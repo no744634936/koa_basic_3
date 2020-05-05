@@ -307,7 +307,6 @@ module.exports={
             pageSize:pageSize,
             sortCondition:{"created_time":-1},   //按文章的最新顺序排序
         })
-        console.log(result);
         
         await ctx.render("admin_views/articles_list.html",{
             list:result,
@@ -336,7 +335,7 @@ module.exports={
         let keywords=ctx.req.body.keywords;
         let description=ctx.req.body.description || '';
         let content=ctx.req.body.content ||'';
-        let img_url=ctx.req.file? ctx.req.file.path :'';
+        let img_url=ctx.req.file? ctx.req.file.path.substr(13) :'';
 
         //属性的简写
         let json={
@@ -355,7 +354,9 @@ module.exports={
         let id=ctx.query.id;
         let categories=await DB.find('article_categories',{});
         let article=await DB.find("articles",{"_id":DB.getObjectId(id)});
-
+        console.log(article[0]);
+        console.log(categories);
+        
         //获取上一页的url。为doEditArticle方法里的 编辑哪一页的记录，编辑完了之后就跳到那一页做准备。
         console.log(ctx.request.header.referer);
         
@@ -368,7 +369,7 @@ module.exports={
     },
     doEditArticle:async(ctx)=>{
         let pid=ctx.req.body.pid;
-        let catename=ctx.req.body.categoryName ? ctx.req.body.categoryName.trim():"";
+        let catename=ctx.req.body.categoryName.includes("---") ? ctx.req.body.categoryName.trim().substr(3):ctx.req.body.categoryName.trim();
         let title=ctx.req.body.title ? ctx.req.body.title.trim():"";
         let author=ctx.req.body.author ? ctx.req.body.author.trim():"";
         let status=ctx.req.body.status;
@@ -378,7 +379,7 @@ module.exports={
         let keywords=ctx.req.body.keywords;
         let description=ctx.req.body.description || '';
         let content=ctx.req.body.content ||'';
-        let img_url=ctx.req.file? ctx.req.file.path :'';
+        let img_url=ctx.req.file? ctx.req.file.path.substr(13) :'';
 
         let articleId=ctx.req.body.articleId;
         let startURL=ctx.req.body.previousURL;

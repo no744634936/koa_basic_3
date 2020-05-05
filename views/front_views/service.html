@@ -43,45 +43,15 @@
     <div class="main">    
     
     		<ul class="clear">
-				<li class="service">
-					<img src="images/service_01.png"/>
-					<a href="#">
-						<h3>互联网+</h3>
+                {{each serviceList}}
+				<li class="service" style="width:400px;height:400px">
+					<img src="{{$value.img_url}}"/>
+					<a href="/content/{{@$value._id}}">
+						<h3>{{$value.title}}</h3>
 					</a>
-				</li>
-				<li class="service">
-					<img src="images/service_02.png"/>
-					<a href="#">
-						<h3>APP开发</h3>
-					</a>
-				</li>
-				<li class="service">
-					<img src="images/service_03.png"/>
-					<a href="#">
-						<h3>微信开发</h3>
-					</a>
-				</li>
-				<li class="service">
-					<img src="images/service_04.png"/>
-					<a href="#">
-						<h3>软件开发</h3>
-					</a>
-				</li>
-				<li class="service">
-					<img src="images/service_05.png"/>
-					<a href="#">
-						<h3>平台定制</h3>
-					</a>
-				</li>
-				<li class="service">
-					<img src="images/service_06.png"/>
-					<<a href="#">
-						<h3>运维支撑</h3>
-					</a>
-				</li>
-                                
+                </li>
+                {{/each}}        
 			</ul>
-    
     </div>
     
 
