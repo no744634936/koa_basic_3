@@ -105,18 +105,6 @@ npm install  ko2-ueditor --save;
 
 ---------------------------------
 
-把文章内容取出来 
-http://localhost:3003/news        这一页是显示所有新闻分类，与所有的新闻文章。
-
-
-下面这两页是显示，每个新闻分类下面的新闻文章
-http://localhost:3003/news/category/5eafe7b46ea75e50a015f9ca
-
-http://localhost:3003/news/category/5eafe7d86ea75e50a015f9cb
-
-
-
-前一章的上面这种写法需要很多个页面，我想在一个页面显示不同的分类文章列表。
 这一章来学习如何制作。同一个页面根据分类筛选数据的功能
 
 同一个页面根据分类筛选数据的功能 根据后面携带的pid来进行判断
