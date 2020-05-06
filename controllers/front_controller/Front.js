@@ -27,17 +27,40 @@ class FrontController{
     service=async(ctx)=>{
         let serviceList=await DB.find("articles",{"pid":"5eafe7856ea75e50a015f9c8"});
         await ctx.render("front_views/service.html",{
+            navs:await this.getNavs(),
             serviceList:serviceList,
         })
     }
 
     displayContent=async(ctx)=>{
-        console.log(ctx.params);
+
         let id=ctx.params.id;
         let content=await DB.find("articles",{"_id":DB.getObjectId(id)});
-        console.log(content[0]);
+        
+        //获取当前文章的分类信息 也就是pid
+        let pid=content[0].pid;
+
+        //根据pid 去 article_categories 数据表里面找，对应的数据。
+        //如果找到了就是顶级分类。如果没找到就查找二级分类
+        let cateResult=await DB.find("article_categories",{"_id":DB.getObjectId(pid)});
+        console.log(pid);
+        
+        //没找到,查找二级分类，并把记录取出来
+        if(cateResult.length==0){
+            cateResult=await DB.find("article_categories",{"secondCategories._id":DB.getObjectId(pid)});
+        }
+
+        //在navs表里查找，当前分类对相应的url信息。
+        var navResult=await DB.find("navs",{"title":cateResult[0].title});
+
+        //将url传给view 的 public_header.html 文件
+        var pathName=navResult[0].url;
+
+        console.log(pathName);
         
         await ctx.render("front_views/content.html",{
+            pathName:pathName,
+            navs:await this.getNavs(),
             list:content[0],
         })
     
@@ -47,7 +70,6 @@ class FrontController{
         //像这样直接在代码里面写id是不太好的。
         var newscategories=await DB.find("article_categories",{"_id":DB.getObjectId("5eafe79c6ea75e50a015f9c9")})
         var pid=ctx.query.pid;
-
         var page=ctx.query.page||1;
         var pageSize=3;
         
@@ -76,6 +98,7 @@ class FrontController{
         }
 
         await ctx.render("front_views/news.html",{
+            navs:await this.getNavs(),
             newscategories:newscategories[0],
             newsList:News,
             pid:pid,
