@@ -127,8 +127,7 @@ router.all('/editor/controller', ueditor(['public', { "imageAllowFiles": [".png"
 
 
 ------------------------------------------------------------------------
-结合项目中的pdf文件查看
 
-下载完成以后把官方例子中的 example->public->ueditor 复制到我的static_asset文件夹里面去。
+设置ueditor的字体大小。
+将"fontSize" 放入 static_asset\ueditor\ueditor.config.js 文件的 toolbars 数组里即可
 
-<!-- 注意 不传递图片或文件的的时候一定要把 enctype="multipart/form-data" 属性从form中删掉-->
