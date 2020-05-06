@@ -8,6 +8,11 @@
 <link rel="stylesheet" type="text/css" href="front/css/common.css" />
 <link rel="stylesheet" type="text/css" href="front/css/heder_nav-menu.css"/>
 <link rel="stylesheet" type="text/css" href="front/css/successful_case.css"/>
+<!-- 因为分页用到了bootsrap 所以导入 -->
+<link rel="stylesheet" type="text/css" href="/admin/css/bootstrap.min.css"/>
+<style>
+</style>
+
 </head>
 
 <body>
@@ -19,12 +24,11 @@
 </div>
 
 <div id="header_title-wrapper">
-
     <div class="header_title clear">
         <p >
-        {{each newscategories.secondCategories}}
-            <a href="/news/category/{{@$value._id}}">{{$value.title}}</a>
-        {{/each}}
+            {{each newscategories.secondCategories}}
+                <a {{if pid==$value._id}} style="background-color: antiquewhite;"{{/if}} href="/news?pid={{@$value._id}}">{{$value.title}}</a>
+            {{/each}}
         </p>
     </div>
 
@@ -46,12 +50,11 @@
 					</a>
                 </li>
                 {{/each}}        
-			</ul>
+            </ul>
     </div>
+
+    <div id="pagination" class="pagination"></div>
     
-
-
-
 </div>
 
 
@@ -75,7 +78,33 @@
         
 
 
+<script src="/admin/js/jquery-2.0.3.min.js"></script>
+<script src="/my_tools/jqPaginator.js"></script>
+    <script>
+         let pid="{{pid}}"
+        $('#pagination').jqPaginator({
+            totalPages:{{totalPages}},
+            //可以看见的是5页
+            visiblePages: 5,
+            //当前是第几页就选中第几页
+            currentPage: {{currentPage}},
+            onPageChange: function (num, type) {
+                //num是点击的页码数
+                //type有change跟init两种。init是第一次显示页码的时候。change是点击页码的时候，
+                console.log(num,type);     
+                if(type=="change"){
 
+                    if(pid){
+                        location.href="/news?pid={{pid}}&page="+num
+                    }else{
+                        location.href="/news?page="+num
+                    }
+
+                }
+            }
+        });
+    </script>
 
 </body>
+
 </html>

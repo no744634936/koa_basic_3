@@ -116,13 +116,61 @@ http://localhost:3003/news/category/5eafe7d86ea75e50a015f9cb
 
 
 
+前一章的上面这种写法需要很多个页面，我想在一个页面显示不同的分类文章列表。
+这一章来学习如何制作。同一个页面根据分类筛选数据的功能
+
+同一个页面根据分类筛选数据的功能 根据后面携带的pid来进行判断
+
+http://localhost:3003/news 
+
+http://localhost:3003/news?pid=5eafe7b46ea75e50a015f9ca
+
+http://localhost:3003/news?pid=5eafe7d86ea75e50a015f9cb
+
+
+分类项目选中功能，也是利用pid来实现的
 ----------------------------------
 
-使用动态路由的页面的路径都要加 / 吗?
- src="/{{$value.img_url}}"
-那么/代表着什么
 
-                <li>
-                        <a href="#"><img src="/{{$value.img_url}}" /></a>
-                        <p>{{$value.title}}</p>
-                </li>
+<script src="/my_tools/jqPaginator.js"></script>
+
+/my_tools前面这个斜杆 表示的是相对于网址的根。http://localhost:3003/my_tools/jqPaginator.js
+
+
+
+
+
+
+
+
+
+
+-------------------------
+注意这里写的分页功能跟以前写的分页代码有些不一样
+
+<script src="/admin/js/jquery-2.0.3.min.js"></script>
+<script src="/my_tools/jqPaginator.js"></script>
+    <script>
+         let pid="{{pid}}"
+        $('#pagination').jqPaginator({
+            totalPages:{{totalPages}},
+            //可以看见的是5页
+            visiblePages: 5,
+            //当前是第几页就选中第几页
+            currentPage: {{currentPage}},
+            onPageChange: function (num, type) {
+                //num是点击的页码数
+                //type有change跟init两种。init是第一次显示页码的时候。change是点击页码的时候，
+                console.log(num,type);     
+                if(type=="change"){
+
+                    if(pid){
+                        location.href="/news?pid={{pid}}&page="+num
+                    }else{
+                        location.href="/news?page="+num
+                    }
+
+                }
+            }
+        });
+    </script>

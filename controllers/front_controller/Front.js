@@ -42,37 +42,46 @@ class FrontController{
         })
     
     }
-    displayNewsCategory=async(ctx)=>{
+    displayNews=async(ctx)=>{
 
-        //像这样直接在代码里面写id是不对的。
-        let newscategories=await DB.find("article_categories",{"_id":DB.getObjectId("5eafe79c6ea75e50a015f9c9")})
-        console.log(newscategories[0].secondCategories);
+        //像这样直接在代码里面写id是不太好的。
+        var newscategories=await DB.find("article_categories",{"_id":DB.getObjectId("5eafe79c6ea75e50a015f9c9")})
+        var pid=ctx.query.pid;
+
+        var page=ctx.query.page||1;
+        var pageSize=3;
         
-        let subCateArr=[];
-        for(let i=0;i<newscategories[0].secondCategories.length;i++){
-            //注意一定要用toString 不然取出的_id 没有引号 是这个样子5eafe7b46ea75e50a015f9ca
-            //而不是这个样子，这他妈的是怎么回事？
-            subCateArr.push(newscategories[0].secondCategories[i]._id.toString())
+        if(pid){
+            var News=await DB.find("articles",{"pid":pid},{},{
+                page:page,
+                pageSize:pageSize,
+            });
+            var articleNum=await DB.count("articles",{"pid":pid})
+            
+        }else{
+
+            var subCateArr=[];
+            for(let i=0;i<newscategories[0].secondCategories.length;i++){
+                //注意一定要用toString 不然取出的_id 没有引号 是这个样子5eafe7b46ea75e50a015f9ca
+                //而不是这个样子，这他妈的是怎么回事？
+                subCateArr.push(newscategories[0].secondCategories[i]._id.toString())
+            }
+            // console.log(subCateArr);
+            //可以这样使用关键字。$in
+            var News=await DB.find("articles",{"pid":{$in:subCateArr}},{},{
+                page:page,
+                pageSize:pageSize,
+            })
+            var articleNum=await DB.count("articles",{"pid":{$in:subCateArr}})
         }
 
-
-        // console.log(subCateArr);
-        //可以这样使用关键字。$in
-        let allNews=await DB.find("articles",{"pid":{$in:subCateArr}})
-        console.log(allNews);
-        
         await ctx.render("front_views/news.html",{
             newscategories:newscategories[0],
-            newsList:allNews
+            newsList:News,
+            pid:pid,
+            currentPage:page,
+            totalPages:Math.ceil(articleNum/pageSize)
         })
-    }
-    displayNews=async(ctx)=>{
-        let category_id=ctx.params.category_id;
-        let news = await DB.find("articles",{"pid":category_id});
-        await ctx.render("front_views/news_category.html",{
-            list:news,
-        })
-        
     }
 }
 
