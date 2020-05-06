@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <title>新闻资讯</title>
 <title>heder_nav-menu</title>
-<link rel="stylesheet" type="text/css" href="front/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="front/css/common.css" />
-<link rel="stylesheet" type="text/css" href="front/css/heder_nav-menu.css"/>
-<link rel="stylesheet" type="text/css" href="front/css/successful_case.css"/>
+<link rel="stylesheet" type="text/css" href="/front/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="/front/css/common.css" />
+<link rel="stylesheet" type="text/css" href="/front/css/heder_nav-menu.css"/>
+<link rel="stylesheet" type="text/css" href="/front/css/successful_case.css"/>
 </head>
 
 <body>
@@ -18,39 +18,18 @@
     </div>
 </div>
 
-<div id="header_title-wrapper">
 
-    <div class="header_title clear">
-        <p >
-        {{each newscategories.secondCategories}}
-            <a href="/news/category/{{@$value._id}}">{{$value.title}}</a>
-        {{/each}}
-        </p>
-    </div>
-
-
-</div>
-
-
-
-<div id="main-wrapper">
-
-    <div class="main">    
-    
-    		<ul class="clear">
-                {{each newsList}}
-				<li class="service" style="width:400px;height:400px">
-					<img src="{{$value.img_url}}"/>
-					<a href="/content/{{@$value._id}}">
-						<h3>{{$value.title}}</h3>
-					</a>
+<div id="main_wrapper">
+    <div class="main">
+	    <ul class="clear">
+            {{each list}}
+                <li>
+                        <a href="#"><img src="/{{$value.img_url}}" /></a>
+                        <p>{{$value.title}}</p>
                 </li>
-                {{/each}}        
-			</ul>
+            {{/each}}
+	    </ul>
     </div>
-    
-
-
 
 </div>
 

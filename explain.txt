@@ -106,26 +106,23 @@ npm install  ko2-ueditor --save;
 ---------------------------------
 
 把文章内容取出来 
-http://localhost:3003/service
+http://localhost:3003/news        这一页是显示所有新闻分类，与所有的新闻文章。
 
 
+下面这两页是显示，每个新闻分类下面的新闻文章
+http://localhost:3003/news/category/5eafe7b46ea75e50a015f9ca
+
+http://localhost:3003/news/category/5eafe7d86ea75e50a015f9cb
 
 
-<div id="header_nav-wrapper">
-    <div class="main">
-        <h2>{{list.title}}</h2>
-        <!-- 注意这里一定要用@来解析html，否者出现的将都是标签 -->
-        {{@list.content}}
-    </div>
-
-</div>
 
 ----------------------------------
 
-content.html里俩面的路径都要 /front/css/reset.css  这样写，最出的/表示相对于根。
-为什么其他模板可以这样写  front/css/reset.css ；不需要斜杆呢？
+使用动态路由的页面的路径都要加 / 吗?
+ src="/{{$value.img_url}}"
+那么/代表着什么
 
-<link rel="stylesheet" type="text/css" href="/front/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="/front/css/common.css" />
-<link rel="stylesheet" type="text/css" href="/front/css/heder_nav-menu.css"/>
-<link rel="stylesheet" type="text/css" href="/front/css/successful_case.css"/>
+                <li>
+                        <a href="#"><img src="/{{$value.img_url}}" /></a>
+                        <p>{{$value.title}}</p>
+                </li>

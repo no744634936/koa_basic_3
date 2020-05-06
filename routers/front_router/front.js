@@ -16,7 +16,8 @@ router.get("/",frontController.showTopPage);
 router.get("/service",frontController.service);
 //通过url传值有两种方法，一种是/centent?id=123 一种是动态路由传值 /centent/123.这里使用的是动态路由
 router.get("/content/:id",frontController.displayContent);
-router.get("/news",frontController.diplayNews);
+router.get("/news",frontController.displayNewsCategory);
+router.get("/news/category/:category_id",frontController.displayNews);
 
 
 
