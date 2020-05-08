@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+        <!-- 用原生js自己手写一个跨域的ajax 请求。 -->
+
+        <!---第一步本地写一个callback函数-->>
+		<script>
+            xxxx=(data)=>{
+                console.log(data);
+            }
+		</script>
+
+        <!---第二步利用src远程执行这个函数-->>
+		<script src="http://localhost:3001/api/catelist?callback=xxxx"></script>
+	</head>
+	<body>
+		<p></p>
+	</body>
+</html>

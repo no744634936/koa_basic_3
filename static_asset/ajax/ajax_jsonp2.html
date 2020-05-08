@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery-1.12.3.js"></script>
+
+		<script>
+
+			/*
+			* */
+			$(function(){
+
+				var url='http://localhost:3001/api/catelist';
+
+				$.ajax({
+				    url:url,
+				    dataType:'jsonp',    /*定义jsonp请求*/
+				    data:'',      /*get传值*/
+				    jsonp:'callback',      /*回调函数的参数*/
+				    success:function(data) {
+						  console.log(data);
+				    },
+				    timeout:3000     /*超时时间*/
+				});
+
+			})
+		</script>
+
+
+	</head>
+	<body>
+		<p></p>
+	</body>
+</html>
