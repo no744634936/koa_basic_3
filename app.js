@@ -10,7 +10,7 @@ const session = require('koa-session');
 const koaBodyparser = require('koa-bodyparser');
 const sd = require('silly-datetime');
 const jsonp=require("koa-jsonp");
-
+const cors=require("koa2-cors");
 const app = new Koa();
 
 
@@ -45,6 +45,9 @@ app.use(static("."));
 app.use(static(__dirname+'/static_asset'));
 app.use(session(CONFIG, app));
 app.use(jsonp());
+
+//配置后台允许跨域
+app.use(cors());
 
 
 

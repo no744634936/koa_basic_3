@@ -103,57 +103,19 @@ npm install  ko2-ueditor --save;
 
 
 
+//后台允许跨域请求api接口
+npm install koa2-cors --save
+
 ---------------------------------
-使用koa-jsonp 来写API接口
 
+第二种跨域请求是后台允许跨域，使用koa2-cors 中间件就可以使后台允许跨域了。
+如果后天不允许跨域，那么post跨域提交数据也会有问题。
 
-1，首先在 静态资源文件夹(static_asset)里面有一个ajax文件夹，ajax文件夹里有一个ajax_get.html 文件
-   这个ajax_get.html 文件是通过jq的 ajax 来请求数据的，
+//像这样配置
+var Koa = require('koa');
+var cors = require('koa2-cors');
+ 
+var app = new Koa();
+app.use(cors());
 
-   这个时候 ajax_get.html 就是前端(服务端)
-   打开url  :   http://localhost:3001/ajax/ajax_get.html
-   点击请求数据按钮，就可以在控制台 看到数据了。
-
-   因为前端页面 ajax_get.html 和后端接口都在同一个项目里面，所以这种ajax请求叫做同源请求。（我自己取的名叫做同源请求）
-   如果将ajax_get.html文件和js文件夹移出项目文件夹。
-   放到电脑的桌面上，或者任意一个文件夹里，浏览器打开ajax_get.html文件，点击请求数据按钮。会出现一个错误
-
-   ajax_get.html:1 Access to XMLHttpRequest at 'http://localhost:3001/api/catelist' from origin 'null' has been blocked by CORS policy: 
-   No 'Access-Control-Allow-Origin' header is present on the requested resource.
-
-   这是浏览器的同源策略导致跨域问题
-   什么情况存在跨域？
-   域名  端口 协议 任意一个不一样就存在跨域
-
-
-
-2，那么如何进行跨域请求呢？
-  一种是jsonp 来跨域请求
-  jsonp的原理 ：利用script src可以跨域的特性
-  
-
-    1.本地写一个回调函数
-
-    2、在远程执行这个回调函数，把远程的数据传到本地 
-    ( 
-        说白了就是，使用api接口时，在 url后面加上一个callback参数。
-        就像这样
-        http://localhost:3001/api/catelist?callback=XXX
-
-        我在浏览器里输入http://localhost:3001/api/catelist?callback=xxx
-        它就会自动把数据当作参数放进xxx() 的括号里面去。
-        记住一定要写callback=,这是规定。
-
-    )
-
-    static_asset/ajax/ajax_jsonp1.html 是利用js写的原生ajax跨域请求。
-    使用(http://localhost:3001/ajax/ajax_jsonp1.html) 进行同域请求没有问题。
-    将ajax_jsonp1.html 文件移到项目文件夹外单独用浏览器打开也可以进行异域请求。
-
-
-    ajax_jsonp2.html 文件使用JQuery写的跟 ajax_jsonp1.html 文件是一样的，
-
-	前提条件是服务器必须支持jsonp，因为我引入了koa-jsonp,所以服务器是支持jsonp的。
-
-第二种跨域请求是后台允许跨域，使用koa-cors 中间件就可以使后台允许跨域了。
-详见下一章节
+ 将ajax_get.html 文件移出项目文件再打开也可以异域请求了
