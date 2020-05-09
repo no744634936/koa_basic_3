@@ -3,6 +3,8 @@ let router=require("koa-router")()
 
 router.get ("/api/cateList",apiController.catelist);
 
+router.get ("/api/articles",apiController.articleList);
+
 
 
 

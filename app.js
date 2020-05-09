@@ -50,8 +50,6 @@ app.use(jsonp());
 app.use(cors());
 
 
-
-
 //路由写在所有中间件的最下面。
 app.use(admin); 
 app.use(front); 

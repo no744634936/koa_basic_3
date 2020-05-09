@@ -119,3 +119,15 @@ var app = new Koa();
 app.use(cors());
 
  将ajax_get.html 文件移出项目文件再打开也可以异域请求了
+
+ ---------------
+新闻列表接口的分页
+
+ http://localhost:3001/api/articles
+ http://localhost:3001/api/articles?page=2
+ http://localhost:3001/api/articles?page=3
+
+
+ ーーーーーーーーーーーーーーーーーーーーーーーーーー
+ 允许跨域后安全性如何解决？
+ 签名验证
