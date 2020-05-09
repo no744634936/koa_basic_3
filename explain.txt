@@ -8,7 +8,9 @@
  npm install --save koa-art-template
 
 
- 2、const render = require('koa-art-template');
+ 2、
+ const path=require('path')
+ const render = require('koa-art-template');
 
 
  3、
