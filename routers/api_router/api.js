@@ -3,7 +3,7 @@ let router=require("koa-router")()
 
 router.get ("/api/cateList",apiController.catelist);
 
-router.get ("/api/articles",apiController.articleList);xiam
+router.get ("/api/articles",apiController.articleList);
 
 //前面写后端的时候，post方法既能用来增加数据，也能用来修改数据。
 //但是在restful api中。post方法最好仅仅用来增加数据。
